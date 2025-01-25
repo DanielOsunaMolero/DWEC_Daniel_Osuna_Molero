@@ -275,41 +275,23 @@ class Estudiante extends Persona {
     
     
 
-/*
-    Menú
-    Interfaz principal para interactuar con el sistema.
-
-    Opciones del Menú:
-    1.Añadir estudiante Solicita datos y añade un nuevo estudiante.
-
-    2.Eliminar estudiante Solicita un ID y elimina el estudiante correspondiente.
-
-    3.Añadir asignatura Añade una nueva asignatura al sistema.
-
-    4.Eliminar asignatura Elimina una asignatura, desmatriculando a todos los estudiantes inscritos en ella.
-
-    5.Matricular estudiante en asignatura Matricula un estudiante en una asignatura específica.
-
-    6.Desmatricular estudiante de asignatura Desmatricula un estudiante de una asignatura específica.
-
-    7.Asignar nota a un estudiante Asigna una calificación a un estudiante en una asignatura.
-
-    8.Mostrar estudiantes Muestra la lista de estudiantes con sus asignaturas.
-
-    9.Mostrar asignaturas Muestra la lista de asignaturas y los estudiantes matriculados.
-
-    10.Calcular promedio de un estudiante Calcula el promedio general de calificaciones de un estudiante.
-
-    11.Calcular promedio general Calcula el promedio general de todos los estudiantes.
-
-    12.Buscar asignatura por nombre Busca y muestra asignaturas cuyos nombres coincidan con un patrón.
-
-    13.Buscar estudiante por nombre Busca y muestra estudiantes cuyos nombres coincidan con un patrón.
-
-    14.Calcular promedio de una asignatura Calcula el promedio de calificaciones de una asignatura específica.
-
-    15.Salir Finaliza el programa.
-*/
+/**
+ * Menú
+ * Interfaz principal para interactuar con el sistema.
+ *
+ * Opciones:
+ * 1. Añadir estudiante.
+ * 2. Eliminar estudiante.
+ * 3. Mostrar estudiantes.
+ * 4. Añadir asignatura.
+ * 5. Mostrar asignaturas.
+ * 6. Matricular estudiante en asignatura.
+ * 7. Desmatricular estudiante de asignatura.
+ * 8. Asignar nota a un estudiante.
+ * 9. Calcular promedio de un estudiante.
+ * 10. Calcular promedio general de estudiantes.
+ * 0. Salir.
+ */
 
 // Inicialización de datos directamente
 const direccion1 = new Direccion("Calle Primavera", 15, "2A", "28010", "Madrid", "Madrid");
