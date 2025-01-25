@@ -1,2 +1,4 @@
 # DWEC_Proyecto_SGAEA
-Repositorio para el proyecto de Desarrollo Web en Entorno Cliente
+Proyecto de Sistema de Gestión
+Académica de Estudiantes y
+Asignaturas (SGAEA) de Desarrollo Web en Entorno Cliente
