@@ -1,352 +1,306 @@
 /*
-Enlace a GitHub
-
-https://github.com/DanielOsunaMolero/DWEC_OsunaMolero_Daniel/blob/ramal/Proyecto%20primer%20trimestre%20Daniel%20Osuna/Proyecto.js*/ 
-
+ * Enlace a GitHub
+ * https://github.com/DanielOsunaMolero/DWEC_OsunaMolero_Daniel/blob/ramal/Proyecto%20primer%20trimestre%20Daniel%20Osuna/Proyecto.js
+ */
 
 /**
-     Clase Direccion
-    Representa la dirección de un estudiante.
-
-    Atributos:
-    _calle: (Cadena) Nombre de la calle.
-    _numero: (Número) Número de la dirección.
-    _piso: (Cadena) Piso o apartamento.
-    _codPostal: (Cadena) Código postal (5 dígitos).
-    _provincia: (Cadena) Provincia de la dirección.
-    _localidad: (Cadena) Localidad de la dirección.
-    Métodos:
-    1.constructor(calle, numero, piso, codPostal, provincia, localidad) Inicializa una nueva dirección con los datos proporcionados.
-
-    2.Getters (calle, numero, piso, codPostal, provincia, localidad) Devuelven los valores correspondientes de la dirección.
+ * Clase Direccion
+ * Representa la dirección de un estudiante.
  */
+class Direccion {
+    /**
+     * Crea una nueva dirección.
+     * @param {string} calle - Nombre de la calle.
+     * @param {number} numero - Número de la dirección.
+     * @param {string} piso - Piso o apartamento.
+     * @param {string} codPostal - Código postal (5 dígitos).
+     * @param {string} provincia - Provincia de la dirección.
+     * @param {string} localidad - Localidad de la dirección.
+     * @throws {Error} Si el código postal no tiene exactamente 5 dígitos.
+     */
+    constructor(calle, numero, piso, codPostal, provincia, localidad) {
+        this._calle = calle;
+        this._numero = numero;
+        this._piso = piso;
 
-    
-    class Direccion {
-        constructor(calle, numero, piso, codPostal, provincia, localidad) {
-            this._calle = calle;
-            this._numero = numero;
-            this._piso = piso;
-    
-            if (!/^\d{5}$/.test(codPostal)) {
-                throw new Error("El código postal debe tener exactamente 5 dígitos.");
-            }
-            this._codPostal = codPostal;
-            this._provincia = provincia;
-            this._localidad = localidad;
+        if (!/^\d{5}$/.test(codPostal)) {
+            throw new Error("El código postal debe tener exactamente 5 dígitos.");
         }
-    
-        toString() {
-            return `${this._calle}, ${this._numero}, ${this._piso}, ${this._localidad}, ${this._provincia} (${this._codPostal})`;
-        }
+        this._codPostal = codPostal;
+        this._provincia = provincia;
+        this._localidad = localidad;
     }
-    
-    
-    
-/*
-    Clase Persona 
-    es una clase base que encapsula los atributos y comportamientos comunes de cualquier persona, como su nombre, edad y dirección. 
-    Está diseñada para ser reutilizada por otras clases que representan tipos específicos de personas, como Estudiante o en un futuro se podrian añadir profesores.
 
-    Atributos:
-    _nombre (string):
-    Almacena el nombre de la persona. Es un atributo privado y solo se puede acceder o modificar a través de los métodos públicos.
+    /**
+     * Convierte la dirección a una representación en forma de cadena.
+     * @returns {string} La dirección en formato legible.
+     */
+    toString() {
+        return `${this._calle}, ${this._numero}, ${this._piso}, ${this._localidad}, ${this._provincia} (${this._codPostal})`;
+    }
+}
 
-    _edad (number):
-    Representa la edad de la persona. Es un atributo privado y solo se puede acceder o modificar a través de los métodos públicos.
-
-    _direccion (Direccion):
-    Representa la dirección de la persona. Debe ser una instancia de la clase Direccion. Es un atributo privado.
-
+/**
+ * Clase Persona
+ * Representa a una persona con atributos comunes como nombre, edad y dirección.
  */
-
-    class Persona {
+class Persona {
+    /**
+     * Crea una nueva Persona.
+     * @param {string} nombre - Nombre de la persona.
+     * @param {number} edad - Edad de la persona.
+     * @param {Direccion} direccion - Dirección de la persona.
+     */
     constructor(nombre, edad, direccion) {
         this._nombre = nombre;
         this._edad = edad;
         this._direccion = direccion;
     }
 
+    /**
+     * Convierte el objeto Persona a una representación en forma de cadena.
+     * @returns {string} La representación textual de la Persona.
+     */
     toString() {
         return `Nombre: ${this._nombre}, Edad: ${this._edad}, Dirección: ${this._direccion}`;
     }
 }
 
-    
-    
-
-/*
-    Clase Estudiante
-    La clase Estudiante representa a un estudiante que hereda de la clase base Persona.
-    Representa un estudiante con sus datos personales, asignaturas  y funcionalidades.
-
-    Atributos:
-    _id (number):
-    Identificador único del estudiante. Es un atributo privado.
-
-    _asignaturas (Array):
-    Lista de asignaturas en las que el estudiante está matriculado. Cada elemento del array es un objeto que contiene:
-
-    1.asignatura (Asignatura): Una instancia de la clase Asignatura.
-    2.fechaMatricula (string): Fecha en formato DD/MM/AAAA que indica cuándo el estudiante se matriculó en la asignatura.
-
-    Métodos:
-
-    1.constructor(id, nombre, edad, direccion) Inicializa un nuevo estudiante con los datos proporcionados.
-
-    2.get id() Devuelve el ID del estudiante.
-
-    3.get nombre() Devuelve el nombre del estudiante.
-
-    4.get edad() Devuelve la edad del estudiante.
-
-    5.get direccion() Devuelve la dirección del estudiante.
-
-    6.get asignaturas() Devuelve una copia de la lista de asignaturas matriculadas.
-
-    7.toString() Devuelve una representación en forma de cadena del estudiante.
-
-    8.matricular(asignatura) Matricula al estudiante en una asignatura, almacenando la fecha de matrícula.
-
-    9.desmatricular(asignatura) Elimina la asignatura de la lista de asignaturas del estudiante y actualiza la lista de la asignatura.
-
-    10.promedioGeneral() Calcula el promedio general de todas las asignaturas en las que el estudiante está matriculado.
-*/
-
+/**
+ * Clase Estudiante
+ * Representa a un estudiante que hereda de la clase Persona.
+ */
 class Estudiante extends Persona {
+    /**
+     * Crea un nuevo Estudiante.
+     * @param {number} id - ID único del estudiante.
+     * @param {string} nombre - Nombre del estudiante.
+     * @param {number} edad - Edad del estudiante.
+     * @param {Direccion} direccion - Dirección del estudiante.
+     */
     constructor(id, nombre, edad, direccion) {
         super(nombre, edad, direccion);
         this._id = id;
         this._asignaturas = [];
     }
 
+    /**
+     * Matricula al estudiante en una asignatura.
+     * @param {Asignatura} asignatura - La asignatura en la que se matricula.
+     */
     matricular(asignatura) {
         this._asignaturas.push({ asignatura, fechaMatricula: new Date().toLocaleDateString("es-ES") });
         asignatura.agregarEstudiante(this);
     }
 
+    /**
+     * Desmatricula al estudiante de una asignatura.
+     * @param {Asignatura} asignatura - La asignatura de la que se desmatricula.
+     * @throws {Error} Si el estudiante no está matriculado en la asignatura.
+     */
     desmatricular(asignatura) {
-        try{
+        try {
             const index = this._asignaturas.findIndex(a => a.asignatura === asignatura);
             if (index === -1) throw new Error("El estudiante no está matriculado en esta asignatura.");
             this._asignaturas.splice(index, 1);
             asignatura.listaEstudiantes = asignatura.listaEstudiantes.filter(est => est !== this);
-        
-        } catch (error){
-            console.error("Error al desmatricular" , error.message);
+        } catch (error) {
+            console.error("Error al desmatricular", error.message);
         }
     }
-    
 
+    /**
+     * Calcula el promedio de todas las asignaturas del estudiante.
+     * @returns {string} El promedio del estudiante o un mensaje si no hay calificaciones disponibles.
+     */
     promedioIndividual() {
         const notas = this._asignaturas.flatMap(a => a.asignatura.obtenerNotas(this));
         return notas.length ? (notas.reduce((sum, val) => sum + val, 0) / notas.length).toFixed(2) : "No hay calificaciones disponibles.";
     }
-    
 
+    /**
+     * Muestra todas las asignaturas en las que el estudiante está matriculado.
+     */
     mostrarAsignaturas() {
         console.log(`Asignaturas de ${this._nombre}:`);
         this._asignaturas.forEach(a => console.log(`- ${a.asignatura.nombre}`));
     }
 
+    /**
+     * Convierte el objeto Estudiante a una representación en forma de cadena.
+     * @returns {string} La representación textual del Estudiante.
+     */
     toString() {
         return `ID: ${this._id}, ${super.toString()}`;
     }
 }
 
-
-
 /**
-    Clase Asignatura
-    Representa una asignatura que contiene estudiantes matriculados y sus calificaciones.
-
-    Atributos:
-    -nombre: (Cadena) Nombre de la asignatura.
-    -listaEstudiantes: (Array) Lista de estudiantes matriculados en la asignatura.
-    -calificaciones: (Array) Lista de objetos { estudiante, calificaciones } que almacenan las calificaciones de cada estudiante.
-
-    Métodos:
-    1.constructor(nombre) Inicializa una nueva asignatura con el nombre proporcionado.
-
-    2.agregarEstudiante(estudiante) Añade un estudiante a la lista de la asignatura e inicializa su registro de calificaciones.
-
-    3.eliminarEstudiante(estudiante) Elimina un estudiante de la lista de la asignatura y su registro de calificaciones. //corregido y borrado por que no tiene sentido
-
-    4.asignarNota(estudiante, nota) Añade una calificación al estudiante en esta asignatura.
-
-    5.obtenerNotas(estudiante) Devuelve la lista de calificaciones del estudiante en esta asignatura.
-
-    6.promedio(estudiante) Calcula el promedio de las calificaciones del estudiante en esta asignatura.
-
-    7.toString() Devuelve una representación en forma de cadena de la asignatura con el número de estudiantes matriculados.
+ * Clase Asignatura
+ * Representa una asignatura que contiene estudiantes matriculados y sus calificaciones.
  */
-    class Asignatura {
-        constructor(nombre) {
-            this.nombre = nombre;
-            this.listaEstudiantes = [];
-            this.calificaciones = [];
-        }
-    
-        agregarEstudiante(estudiante) {
-            this.listaEstudiantes.push(estudiante);
-            if (!this.calificaciones.some(c => c.estudiante === estudiante)) {
-                this.calificaciones.push({ estudiante, calificaciones: [] });
-            }
-        }
-    
-        asignarNota(estudiante, nota) {
-            if (nota < 0 || nota > 10) throw new Error("Nota inválida.");
-            const registro = this.calificaciones.find(c => c.estudiante === estudiante);
-            registro.calificaciones.push(nota);
-        }
-    
-        obtenerNotas(estudiante) {
-            const registro = this.calificaciones.find(c => c.estudiante === estudiante);
-            return registro ? registro.calificaciones : [];
-        }
-    
-        calcularPromedio() {
-            const todasLasNotas = this.calificaciones.flatMap(c => c.calificaciones);
-            return todasLasNotas.length
-                ? (todasLasNotas.reduce((sum, val) => sum + val, 0) / todasLasNotas.length).toFixed(2)
-                : "No hay calificaciones disponibles.";
-        }
-    
-        mostrarEstudiantes() {
-            console.log(`Estudiantes matriculados en ${this.nombre}:`);
-            this.listaEstudiantes.forEach(est => console.log(`- ${est.nombre}`));
-        }
-    
-        toString() {
-            return `Asignatura: ${this.nombre}, Estudiantes matriculados: ${this.listaEstudiantes.length}`;
+class Asignatura {
+    /**
+     * Crea una nueva Asignatura.
+     * @param {string} nombre - Nombre de la asignatura.
+     */
+    constructor(nombre) {
+        this.nombre = nombre;
+        this.listaEstudiantes = [];
+        this.calificaciones = [];
+    }
+
+    /**
+     * Añade un estudiante a la asignatura.
+     * @param {Estudiante} estudiante - El estudiante que se matricula.
+     */
+    agregarEstudiante(estudiante) {
+        this.listaEstudiantes.push(estudiante);
+        if (!this.calificaciones.some(c => c.estudiante === estudiante)) {
+            this.calificaciones.push({ estudiante, calificaciones: [] });
         }
     }
-    
-    
+
+    /**
+     * Asigna una calificación a un estudiante.
+     * @param {Estudiante} estudiante - El estudiante que recibe la nota.
+     * @param {number} nota - La calificación asignada.
+     * @throws {Error} Si la nota no está entre 0 y 10.
+     */
+    asignarNota(estudiante, nota) {
+        if (nota < 0 || nota > 10) throw new Error("Nota inválida.");
+        const registro = this.calificaciones.find(c => c.estudiante === estudiante);
+        registro.calificaciones.push(nota);
+    }
+
+    /**
+     * Obtiene las calificaciones de un estudiante.
+     * @param {Estudiante} estudiante - El estudiante cuyas notas se obtienen.
+     * @returns {number[]} Las calificaciones del estudiante.
+     */
+    obtenerNotas(estudiante) {
+        const registro = this.calificaciones.find(c => c.estudiante === estudiante);
+        return registro ? registro.calificaciones : [];
+    }
+
+    /**
+     * Calcula el promedio de la asignatura.
+     * @returns {string} El promedio de las calificaciones o un mensaje si no hay notas disponibles.
+     */
+    calcularPromedio() {
+        const todasLasNotas = this.calificaciones.flatMap(c => c.calificaciones);
+        return todasLasNotas.length
+            ? (todasLasNotas.reduce((sum, val) => sum + val, 0) / todasLasNotas.length).toFixed(2)
+            : "No hay calificaciones disponibles.";
+    }
+
+    /**
+     * Muestra los estudiantes matriculados en la asignatura.
+     */
+    mostrarEstudiantes() {
+        console.log(`Estudiantes matriculados en ${this.nombre}:`);
+        this.listaEstudiantes.forEach(est => console.log(`- ${est.nombre}`));
+    }
+
+    /**
+     * Convierte el objeto Asignatura a una representación en forma de cadena.
+     * @returns {string} La representación textual de la asignatura.
+     */
+    toString() {
+        return `Asignatura: ${this.nombre}, Estudiantes matriculados: ${this.listaEstudiantes.length}`;
+    }
+}
 
 /**
-    Clase ListaEstudiantes
-    Administra una lista de estudiantes, permitiendo su gestión global.
-
-    Atributos:
-    listaEstudiantes: (Objeto) Diccionario de estudiantes con el ID como clave.
-    idActual: (Número) ID único incremental para nuevos estudiantes.
-    Métodos:
-    1.constructor() Inicializa la lista de estudiantes y el contador de IDs.
-
-    2.agregarEstudiante(nombre, edad, direccion) Añade un nuevo estudiante a la lista.
-
-    3.eliminarEstudiante(id) Elimina un estudiante de la lista por su ID.
-
-    4.obtenerEstudiantePorID(id) Devuelve un estudiante con el ID especificado.
-
-    5.generarReporte() Genera un reporte detallado de todos los estudiantes y sus asignaturas matriculadas.
-
-    6.promedioGeneral() Calcula el promedio general de calificaciones de todos los estudiantes.
+ * Clase ListaEstudiantes
+ * Administra una lista de estudiantes, permitiendo su gestión global.
  */
-    class ListaEstudiantes {
-        constructor() {
-            this.listaEstudiantes = {};
-            this.idActual = 1;
+class ListaEstudiantes {
+    /**
+     * Crea una nueva lista de estudiantes.
+     */
+    constructor() {
+        this.listaEstudiantes = {};
+        this.idActual = 1;
+    }
+
+    /**
+     * Añade un nuevo estudiante a la lista.
+     * @param {string} nombre - Nombre del estudiante.
+     * @param {number} edad - Edad del estudiante.
+     * @param {Direccion} direccion - Dirección del estudiante.
+     */
+    agregarEstudiante(nombre, edad, direccion) {
+        const nuevoEstudiante = new Estudiante(this.idActual, nombre, edad, direccion);
+        this.listaEstudiantes[this.idActual] = nuevoEstudiante;
+        this.idActual++;
+        console.log(`Estudiante ${nombre} añadido con éxito.`);
+    }
+
+    /**
+     * Elimina un estudiante por su ID.
+     * @param {number} id - El ID del estudiante a eliminar.
+     */
+    eliminarEstudiante(id) {
+        const estudiante = this.listaEstudiantes[id];
+        if (!estudiante) {
+            console.log(`No se encontró un estudiante con ID ${id}.`);
+            return;
         }
-    
-        agregarEstudiante(nombre, edad, direccion) {
-            const nuevoEstudiante = new Estudiante(this.idActual, nombre, edad, direccion);
-            this.listaEstudiantes[this.idActual] = nuevoEstudiante;
-            this.idActual++;
-            console.log(`Estudiante ${nombre} añadido con éxito.`);
-        }
-    
-        eliminarEstudiante(id) {
-            const estudiante = this.listaEstudiantes[id];
-            if (!estudiante) {
-                console.log(`No se encontró un estudiante con ID ${id}.`);
-                return;
-            }
-        
-            // Desmatricular al estudiante de todas las asignaturas
-            estudiante._asignaturas.forEach(a => {
-                a.asignatura.listaEstudiantes = a.asignatura.listaEstudiantes.filter(est => est !== estudiante);
-            });
-        
-            // Eliminar al estudiante de la lista
-            delete this.listaEstudiantes[id];
-            console.log(`Estudiante con ID ${id} eliminado y desmatriculado de todas las asignaturas.`);
-        }
-        
-    
-        mostrarEstudiantes() {
-            for (const id in this.listaEstudiantes) {
-                console.log(this.listaEstudiantes[id].toString());
-            }
-        }
-    
-        calcularPromedioGeneral() {
-            let suma = 0, cantidad = 0;
-            for (const id in this.listaEstudiantes) {
-                const promedio = parseFloat(this.listaEstudiantes[id].promedioIndividual());
-                if (!isNaN(promedio)) {
-                    suma += promedio;
-                    cantidad++;
-                }
-            }
-            console.log(`Promedio general de todos los estudiantes: ${(cantidad ? suma / cantidad : 0).toFixed(2)}`);
-        }
-    
-        buscarEstudiantePorNombre(patron) {
-            const resultados = Object.values(this.listaEstudiantes).filter(est =>
-                est.nombre.toLowerCase().includes(patron.toLowerCase())
-            );
-            if (resultados.length === 0) {
-                console.log("No se encontraron estudiantes.");
-            } else {
-                resultados.forEach(est => console.log(est.toString()));
-            }
+
+        // Desmatricular al estudiante de todas las asignaturas
+        estudiante._asignaturas.forEach(a => {
+            a.asignatura.listaEstudiantes = a.asignatura.listaEstudiantes.filter(est => est !== estudiante);
+        });
+
+        // Eliminar al estudiante de la lista
+        delete this.listaEstudiantes[id];
+        console.log(`Estudiante con ID ${id} eliminado y desmatriculado de todas las asignaturas.`);
+    }
+
+    /**
+     * Muestra todos los estudiantes en la lista.
+     */
+    mostrarEstudiantes() {
+        for (const id in this.listaEstudiantes) {
+            console.log(this.listaEstudiantes[id].toString());
         }
     }
-    
-    
 
-/*
-    Menú
-    Interfaz principal para interactuar con el sistema.
+    /**
+     * Calcula el promedio general de todos los estudiantes.
+     */
+    calcularPromedioGeneral() {
+        let suma = 0, cantidad = 0;
+        for (const id in this.listaEstudiantes) {
+            const promedio = parseFloat(this.listaEstudiantes[id].promedioIndividual());
+            if (!isNaN(promedio)) {
+                suma += promedio;
+                cantidad++;
+            }
+        }
+        console.log(`Promedio general de todos los estudiantes: ${(cantidad ? suma / cantidad : 0).toFixed(2)}`);
+    }
 
-    Opciones del Menú:
-    1.Añadir estudiante Solicita datos y añade un nuevo estudiante.
+    /**
+     * Busca estudiantes cuyo nombre coincida con un patrón.
+     * @param {string} patron - El patrón a buscar.
+     */
+    buscarEstudiantePorNombre(patron) {
+        const resultados = Object.values(this.listaEstudiantes).filter(est =>
+            est.nombre.toLowerCase().includes(patron.toLowerCase())
+        );
+        if (resultados.length === 0) {
+            console.log("No se encontraron estudiantes.");
+        } else {
+            resultados.forEach(est => console.log(est.toString()));
+        }
+    }
+}
 
-    2.Eliminar estudiante Solicita un ID y elimina el estudiante correspondiente.
-
-    3.Añadir asignatura Añade una nueva asignatura al sistema.
-
-    4.Eliminar asignatura Elimina una asignatura, desmatriculando a todos los estudiantes inscritos en ella.
-
-    5.Matricular estudiante en asignatura Matricula un estudiante en una asignatura específica.
-
-    6.Desmatricular estudiante de asignatura Desmatricula un estudiante de una asignatura específica.
-
-    7.Asignar nota a un estudiante Asigna una calificación a un estudiante en una asignatura.
-
-    8.Mostrar estudiantes Muestra la lista de estudiantes con sus asignaturas.
-
-    9.Mostrar asignaturas Muestra la lista de asignaturas y los estudiantes matriculados.
-
-    10.Calcular promedio de un estudiante Calcula el promedio general de calificaciones de un estudiante.
-
-    11.Calcular promedio general Calcula el promedio general de todos los estudiantes.
-
-    12.Buscar asignatura por nombre Busca y muestra asignaturas cuyos nombres coincidan con un patrón.
-
-    13.Buscar estudiante por nombre Busca y muestra estudiantes cuyos nombres coincidan con un patrón.
-
-    14.Calcular promedio de una asignatura Calcula el promedio de calificaciones de una asignatura específica.
-
-    15.Salir Finaliza el programa.
-*/
-
-///////////////////////////////////PRUEBAS///////////////////////////////////////
-const PlistaEstudiantes = new ListaEstudiantes();
-const asignaturas = [];
-
+/**
+ * Inicializa datos de ejemplo para el programa.
+ */
 function inicializarDatos() {
     const direccion1 = new Direccion("Calle Primavera", 15, "2A", "28010", "Madrid", "Madrid");
     const direccion2 = new Direccion("Calle Invierno", 22, "3B", "18012", "Granada", "Granada");
@@ -391,12 +345,17 @@ function inicializarDatos() {
     console.log("Datos inicializados correctamente.");
 }
 
-// Llamada a la función para inicializar datos antes de mostrar el menú
 inicializarDatos();
 
+/**
+ * Muestra el menú principal e interactúa con el usuario.
+ */
 function programa() {
+    /**
+     * Muestra las opciones disponibles en el menú principal.
+     */
     function mostrarMenu() {
-                console.log(`
+        console.log(`
         === Menú Principal ===
         1. Añadir estudiante
         2. Eliminar estudiante
@@ -410,12 +369,20 @@ function programa() {
         10. Calcular promedio general de estudiantes
         0. Salir
         Escribe tu opción en la consola y presiona Enter:
-                `);
-            }
+        `);
+    }
 
+    /**
+     * Procesa la opción seleccionada por el usuario.
+     * @param {string} opcion - La opción seleccionada del menú.
+     * @returns {boolean} Indica si el programa debe continuar ejecutándose.
+     */
     function procesarOpcion(opcion) {
         switch (opcion) {
             case "1":
+                /**
+                 * Solicita información del estudiante y lo agrega a la lista.
+                 */
                 const nombre = prompt("Nombre del estudiante:");
                 const edad = parseInt(prompt("Edad del estudiante:"), 10);
                 const direccion = prompt("Dirección del estudiante:");
@@ -424,45 +391,67 @@ function programa() {
                 break;
 
             case "2":
-                const idEliminar = parseInt(prompt("ID del estudiante a eliminar:"), 10);
-                PlistaEstudiantes.eliminarEstudiante(idEliminar);
+                /**
+                 * Elimina un estudiante por su ID.
+                 */
+                try {
+                    const idEliminar = parseInt(prompt("ID del estudiante a eliminar:"), 10);
+                    if (isNaN(idEliminar)) throw new Error("ID inválido. Por favor, introduce un número válido.");
+                    PlistaEstudiantes.eliminarEstudiante(idEliminar);
+                } catch (error) {
+                    console.error("Error al eliminar estudiante:", error.message);
+                }
                 break;
 
             case "3":
+                /**
+                 * Muestra la lista de estudiantes.
+                 */
                 console.log("Lista de estudiantes:");
                 PlistaEstudiantes.mostrarEstudiantes();
                 break;
 
             case "4":
+                /**
+                 * Agrega una nueva asignatura.
+                 */
                 const nombreAsignatura = prompt("Nombre de la asignatura:");
                 asignaturas.push(new Asignatura(nombreAsignatura));
                 console.log(`Asignatura ${nombreAsignatura} añadida con éxito.`);
                 break;
 
             case "5":
+                /**
+                 * Muestra la lista de asignaturas y sus estudiantes matriculados.
+                 */
                 console.log("Lista de asignaturas:");
                 asignaturas.forEach(a => console.log(`Asignatura: ${a.nombre}, Estudiantes matriculados: ${a.listaEstudiantes.length}`));
                 break;
 
             case "6":
+                /**
+                 * Matricula a un estudiante en una asignatura.
+                 */
                 const idEstMatricular = parseInt(prompt("ID del estudiante a matricular:"), 10);
                 const nombreAsigMatricular = prompt("Nombre de la asignatura:");
                 const estudianteMatricular = PlistaEstudiantes.listaEstudiantes[idEstMatricular];
                 const asignaturaMatricular = asignaturas.find(a => a.nombre === nombreAsigMatricular);
                 if (estudianteMatricular && asignaturaMatricular) {
                     estudianteMatricular.matricular(asignaturaMatricular);
-                    console.log(`Estudiante ${estudianteMatricular.nombre} matriculado en ${asignaturaMatricular.nombre}.`);
+                    console.log(`Estudiante ${estudianteMatricular._nombre} matriculado en ${asignaturaMatricular.nombre}.`);
                 } else {
                     console.log("Estudiante o asignatura no encontrados.");
                 }
                 break;
 
             case "7":
+                /**
+                 * Desmatricula a un estudiante de una asignatura.
+                 */
                 const idEstDesmatricular = parseInt(prompt("ID del estudiante a desmatricular:"), 10);
                 const nombreAsigDesmatricular = prompt("Nombre de la asignatura:");
                 const estudianteDesmatricular = PlistaEstudiantes.listaEstudiantes[idEstDesmatricular];
                 const asignaturaDesmatricular = asignaturas.find(a => a.nombre === nombreAsigDesmatricular);
-            
                 if (estudianteDesmatricular && asignaturaDesmatricular) {
                     estudianteDesmatricular.desmatricular(asignaturaDesmatricular);
                     console.log(`Estudiante ${estudianteDesmatricular._nombre} desmatriculado de ${asignaturaDesmatricular.nombre}.`);
@@ -470,15 +459,16 @@ function programa() {
                     console.log("Estudiante o asignatura no encontrados.");
                 }
                 break;
-                
 
             case "8":
+                /**
+                 * Asigna una nota a un estudiante en una asignatura.
+                 */
                 const idEstNota = parseInt(prompt("ID del estudiante:"), 10);
                 const nombreAsigNota = prompt("Nombre de la asignatura:");
                 const nota = parseFloat(prompt("Introduce la nota (0-10):"));
                 const estudianteNota = PlistaEstudiantes.listaEstudiantes[idEstNota];
                 const asignaturaNota = asignaturas.find(a => a.nombre === nombreAsigNota);
-            
                 if (estudianteNota && asignaturaNota) {
                     asignaturaNota.asignarNota(estudianteNota, nota);
                     console.log(`Nota ${nota} asignada a ${estudianteNota._nombre} en ${asignaturaNota.nombre}.`);
@@ -486,10 +476,11 @@ function programa() {
                     console.log("Estudiante o asignatura no encontrados.");
                 }
                 break;
-            
 
             case "9":
-                
+                /**
+                 * Calcula el promedio de un estudiante.
+                 */
                 try {
                     const idEstPromedio = parseInt(prompt("ID del estudiante:"), 10);
                     const estudiantePromedio = PlistaEstudiantes.listaEstudiantes[idEstPromedio];
@@ -501,12 +492,13 @@ function programa() {
                     console.error("Error al calcular promedio:", error.message);
                 }
                 break;
-            
 
             case "10":
+                /**
+                 * Calcula el promedio general de todos los estudiantes.
+                 */
                 let sumaPromedios = 0;
                 let totalEstudiantes = 0;
-            
                 for (const id in PlistaEstudiantes.listaEstudiantes) {
                     const estudiante = PlistaEstudiantes.listaEstudiantes[id];
                     const promedio = parseFloat(estudiante.promedioIndividual());
@@ -515,17 +507,21 @@ function programa() {
                         totalEstudiantes++;
                     }
                 }
-            
                 const promedioGeneral = totalEstudiantes ? (sumaPromedios / totalEstudiantes).toFixed(2) : 0;
                 console.log(`Promedio general de todos los estudiantes: ${promedioGeneral}`);
                 break;
-                        
 
             case "0":
+                /**
+                 * Finaliza el programa.
+                 */
                 console.log("Saliendo del programa...");
                 return false;
 
             default:
+                /**
+                 * Maneja opciones no válidas.
+                 */
                 console.log("Opción no válida. Por favor, introduce un número entre 0 y 10.");
         }
         return true;
@@ -541,4 +537,5 @@ function programa() {
 
 // Ejecutar el programa
 programa();
+
 
