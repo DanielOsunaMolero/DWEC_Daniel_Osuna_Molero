@@ -381,6 +381,7 @@ Escribe tu opción:`);
             console.log("Lista de estudiantes:");
             for (const id in PlistaEstudiantes.listaEstudiantes) {
                 console.log(PlistaEstudiantes.listaEstudiantes[id].toString());
+                PlistaEstudiantes.listaEstudiantes[id].mostrarAsignaturas();
             }
             break;
 
