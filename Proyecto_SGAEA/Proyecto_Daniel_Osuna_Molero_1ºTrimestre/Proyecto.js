@@ -144,7 +144,7 @@ class Estudiante extends Persona {
         this._asignaturas.forEach(a => console.log(`- ${a.asignatura.nombre}`));
     }
 
-    toString() {2
+    toString() {
         return `ID: ${this._id}, ${super.toString()} , ${this._asignaturas.length > 0 ? `Asignaturas matriculadas: ${this._asignaturas.length}` : "No tiene asignaturas matriculadas."}`; 
     }
 }
