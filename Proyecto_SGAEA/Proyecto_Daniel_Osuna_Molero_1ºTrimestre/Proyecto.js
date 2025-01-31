@@ -144,8 +144,8 @@ class Estudiante extends Persona {
         this._asignaturas.forEach(a => console.log(`- ${a.asignatura.nombre}`));
     }
 
-    toString() {
-        return `ID: ${this._id}, ${super.toString()}`;
+    toString() {2
+        return `ID: ${this._id}, ${super.toString()} , ${this._asignaturas.length > 0 ? `Asignaturas matriculadas: ${this._asignaturas.length}` : "No tiene asignaturas matriculadas."}`; 
     }
 }
 
@@ -432,7 +432,8 @@ Escribe tu opción:`);
                 case "3":
                     let listaEstudiantes = "Lista de estudiantes:\n";
                     for (const id in PlistaEstudiantes.listaEstudiantes) {
-                        listaEstudiantes += `${PlistaEstudiantes.listaEstudiantes[id].toString()}\n`;
+                        listaEstudiantes += `${PlistaEstudiantes.listaEstudiantes[id].toString()}\n`
+                        PlistaEstudiantes.listaEstudiantes[id].mostrarAsignaturas();
                     }
                     prompt(listaEstudiantes);
                     break;
@@ -446,7 +447,7 @@ Escribe tu opción:`);
                 case "5":
                     let listaAsignaturas = "Lista de asignaturas:\n";
                     asignaturas.forEach(a => {
-                        listaAsignaturas += `Asignatura: ${a.nombre}, Estudiantes matriculados: ${a.listaEstudiantes.length}\n`;
+                        listaAsignaturas += `Asignatura: ${a.nombre}, Estudiantes matriculados: ${a.listaEstudiantes.length }\n`;
                     });
                     prompt(listaAsignaturas);
                     break;
