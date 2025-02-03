@@ -333,6 +333,13 @@ class Estudiante extends Persona {
 
 ///////////////////////////////////PRUEBAS///////////////////////////////////////
 
+
+// Agregar estudiantes
+const PlistaEstudiantes = new ListaEstudiantes();
+
+// Crear asignaturas
+const asignaturas = [];
+
 function inicializarDatos() {
     const direccion1 = new Direccion("Calle Primavera", 15, "2A", "28010", "Madrid", "Madrid");
     const direccion2 = new Direccion("Calle Invierno", 22, "3B", "18012", "Granada", "Granada");
@@ -380,6 +387,8 @@ function inicializarDatos() {
 inicializarDatos();
 
 
+
+const matematicas = new Asignatura("Matemáticas");
 function programa() {
     /**
      * Muestra las opciones disponibles en el menú principal.
