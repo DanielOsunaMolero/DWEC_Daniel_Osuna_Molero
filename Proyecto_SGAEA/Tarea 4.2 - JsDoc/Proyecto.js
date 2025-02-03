@@ -298,6 +298,13 @@ class ListaEstudiantes {
     }
 }
 
+
+// Agregar estudiantes
+const PlistaEstudiantes = new ListaEstudiantes();
+
+// Crear asignaturas
+const asignaturas = [];
+
 /**
  * Inicializa datos de ejemplo para el programa.
  */
