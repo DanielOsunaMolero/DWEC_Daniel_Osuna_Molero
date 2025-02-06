@@ -498,7 +498,7 @@ function programa() {
                     const idEstPromedio = parseInt(prompt("ID del estudiante:"), 10);
                     const estudiantePromedio = PlistaEstudiantes.listaEstudiantes[idEstPromedio];
                     if (!estudiantePromedio) throw new Error("Estudiante no encontrado.");
-                    if (estudiantePromedio._asignaturas.length === 0) throw new Error("El estudiante no tiene asignaturas matriculadas.");
+                    if (estudiantePromedio.asignaturas.length === 0) throw new Error("El estudiante no tiene asignaturas matriculadas.");
                     const promedio = estudiantePromedio.promedioIndividual();
                     console.log(`Promedio de ${estudiantePromedio._nombre}: ${promedio}`);
                 } catch (error) {
