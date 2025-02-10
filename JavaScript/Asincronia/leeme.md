@@ -54,3 +54,32 @@ Metodos
             -text()
         -headers
         -formData
+
+TRABAJADORES WEN
+
+Hilo de ejecucion
+
+
+codigo sincrono -> pila de ejecucion -> console.log(for)
+codigo asincrono -> cpña de microtareas -> (mas prioridad) promesas NO SE PUEDE INTERRUMPIR
+codigo asincrono -> cola de tareas -> eventos (menos prioridad ) se puede interrumpir
+
+//metodos
+trabajador.postMessage("msj")
+
+self.postMessage("msj") -> msj del ttrabajo al hilo principal
+
+
+//eventos
+
+-message 
+
+tarbajador.addEventListener("message", (evento) => {
+    console.log("he recibido + evento.mensaje")
+});
+
+-error
+
+trabajador.onerror()=>{
+    console.log("ocurrio un error")
+}

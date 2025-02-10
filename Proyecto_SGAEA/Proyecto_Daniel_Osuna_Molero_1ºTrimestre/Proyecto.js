@@ -1,7 +1,7 @@
 /*
 Enlace a GitHub
 
-https://github.com/DanielOsunaMolero/DWEC_OsunaMolero_Daniel/blob/ramal/Proyecto%20primer%20trimestre%20Daniel%20Osuna/Proyecto.js*/ 
+https://github.com/DanielOsunaMolero/DWEC_Daniel_Osuna_Molero/blob/main/Proyecto_SGAEA/Proyecto_Daniel_Osuna_Molero_1%C2%BATrimestre/Proyecto.js
 
 
 /**
@@ -62,7 +62,7 @@ https://github.com/DanielOsunaMolero/DWEC_OsunaMolero_Daniel/blob/ramal/Proyecto
 
     class Persona {
         #id;
-        
+    
         constructor(id, nombre, edad, direccion) {
             this.#id = id;
             this._nombre = nombre;
@@ -74,8 +74,12 @@ https://github.com/DanielOsunaMolero/DWEC_OsunaMolero_Daniel/blob/ramal/Proyecto
             return this.#id;
         }
     
+        get nombre() {
+            return this._nombre;
+        }
+    
         toString() {
-            return `ID: ${this.#id}, Nombre: ${this._nombre}, Edad: ${this._edad}, Dirección: ${this._direccion}`;
+            return `ID: ${this.#id}, Nombre: ${this.nombre}, Edad: ${this._edad}, Dirección: ${this._direccion}`;
         }
     }
 
@@ -117,7 +121,7 @@ https://github.com/DanielOsunaMolero/DWEC_OsunaMolero_Daniel/blob/ramal/Proyecto
 
     9.desmatricular(asignatura) Elimina la asignatura de la lista de asignaturas del estudiante y actualiza la lista de la asignatura.
 
-    10.promedioGeneral() Calcula el promedio general de todas las asignaturas en las que el estudiante está matriculado.
+    10.promedioIndividual() Calcula el promedio general de todas las asignaturas en las que el estudiante está matriculado.
 */
 
 class Estudiante extends Persona {
@@ -133,24 +137,55 @@ class Estudiante extends Persona {
     }
 
     matricular(asignatura) {
-        this.#asignaturas.push({ asignatura, fechaMatricula: new Date().toLocaleDateString("es-ES") });
-        asignatura.agregarEstudiante(this);
+        try {
+            if (!asignatura) throw new Error("Asignatura no encontrada.");
+
+            if (!this.#asignaturas.some(a => a.asignatura === asignatura)) {
+                this.#asignaturas.push({ asignatura, fechaMatricula: new Date().toLocaleDateString("es-ES") });
+                asignatura.agregarEstudiante(this);
+                console.log(`Estudiante ${this.nombre} matriculado en ${asignatura.nombre}.`);
+            } else {
+                throw new Error(`El estudiante ya está matriculado en ${asignatura.nombre}.`);
+            }
+        } catch (error) {
+            console.error("Error en la matriculación:", error.message);
+        }
     }
 
     desmatricular(asignatura) {
-        const index = this.#asignaturas.findIndex(a => a.asignatura === asignatura);
-        if (index === -1) throw new Error("El estudiante no está matriculado en esta asignatura.");
-        this.#asignaturas.splice(index, 1);
-        asignatura.listaEstudiantes = asignatura.listaEstudiantes.filter(est => est !== this);
+        try {
+            if (!asignatura) throw new Error("Asignatura no encontrada.");
+
+            const index = this.#asignaturas.findIndex(a => a.asignatura === asignatura);
+
+            if (index !== -1) {
+                this.#asignaturas.splice(index, 1);
+                asignatura.eliminarEstudiante(this);
+                console.log(`Estudiante ${this.nombre} desmatriculado de ${asignatura.nombre}.`);
+            } else {
+                throw new Error(`El estudiante no está matriculado en ${asignatura.nombre}.`);
+            }
+        } catch (error) {
+            console.error("Error en la desmatriculación:", error.message);
+        }
     }
 
     promedioIndividual() {
-        const notas = this.#asignaturas.flatMap(a => a.asignatura.obtenerNotas(this));
-        return notas.length ? (notas.reduce((sum, val) => sum + val, 0) / notas.length).toFixed(2) : "No hay calificaciones disponibles.";
+        try {
+            if (this.#asignaturas.length === 0) throw new Error("El estudiante no tiene asignaturas matriculadas.");
+            const notas = this.#asignaturas.flatMap(a => a.asignatura.obtenerNotas(this));
+            if (notas.length === 0) throw new Error("No hay calificaciones disponibles.");
+
+            const promedio = (notas.reduce((sum, val) => sum + val, 0) / notas.length).toFixed(2);
+            
+            return promedio;
+        } catch (error) {
+            console.error("Error al calcular promedio:", error.message);
+        }
     }
 
     mostrarAsignaturas() {
-        console.log(`Asignaturas de ${this._nombre}:`);
+        console.log(`Asignaturas de ${this.nombre}:`);
         this.#asignaturas.forEach(a => console.log(`- ${a.asignatura.nombre}`));
     }
 
@@ -192,22 +227,42 @@ class Estudiante extends Persona {
             this.calificaciones = [];
         }
     
+        // Método para agregar un estudiante a la asignatura e inicializar su registro de calificaciones
         agregarEstudiante(estudiante) {
-            this.listaEstudiantes.push(estudiante);
-            if (!this.calificaciones.some(c => c.estudiante === estudiante)) {
+            if (!estudiante || !estudiante.nombre) {
+                console.error("El estudiante no tiene un nombre válido.");
+                return;
+            }
+    
+            if (!this.listaEstudiantes.some(e => e.id === estudiante.id)) {
+                this.listaEstudiantes.push(estudiante);
                 this.calificaciones.push({ estudiante, calificaciones: [] });
+                console.log(`Estudiante ${estudiante.nombre} agregado a la asignatura ${this.nombre}.`);
+            } else {
+                console.log(`El estudiante ${estudiante.nombre} ya está matriculado en ${this.nombre}.`);
             }
         }
     
         asignarNota(estudiante, nota) {
-            if (nota < 0 || nota > 10) throw new Error("Nota inválida.");
-            const registro = this.calificaciones.find(c => c.estudiante === estudiante);
-            registro.calificaciones.push(nota);
+            try {
+                if (!estudiante) throw new Error("Estudiante no encontrado.");
+                if (!this.listaEstudiantes.some(e => e.id === estudiante.id)) {
+                    throw new Error(`El estudiante ${estudiante.nombre} no está matriculado en ${this.nombre}.`);
+                }
+                if (isNaN(nota) || nota < 0 || nota > 10) {
+                    throw new Error("Nota inválida. Debe estar entre 0 y 10.");
+                }
+    
+                const registro = this.calificaciones.find(c => c.estudiante.id === estudiante.id);
+                registro.calificaciones.push(nota);
+                console.log(`Nota ${nota} asignada a ${estudiante.nombre} en ${this.nombre}.`);
+            } catch (error) {
+                console.error("Error al asignar nota:", error.message);
+            }
         }
     
         obtenerNotas(estudiante) {
-            //{ estudiante: Estudiante, calificaciones: [nota1, nota2, nota3] }
-            const registro = this.calificaciones.find(c => c.estudiante === estudiante);
+            const registro = this.calificaciones.find(c => c.estudiante.id === estudiante.id);
             return registro ? registro.calificaciones : [];
         }
     
@@ -221,6 +276,12 @@ class Estudiante extends Persona {
         mostrarEstudiantes() {
             console.log(`Estudiantes matriculados en ${this.nombre}:`);
             this.listaEstudiantes.forEach(est => console.log(`- ${est.nombre}`));
+        }
+
+        eliminarEstudiante(estudiante) {
+            this.listaEstudiantes = this.listaEstudiantes.filter(e => e.id !== estudiante.id);
+            this.calificaciones = this.calificaciones.filter(c => c.estudiante.id !== estudiante.id);
+            console.log(`Estudiante ${estudiante.nombre} eliminado de la asignatura ${this.nombre}.`);
         }
     
         toString() {
@@ -259,8 +320,8 @@ class Estudiante extends Persona {
         agregarEstudiante(nombre, edad, direccion) {
             const nuevoEstudiante = new Estudiante(this.idActual, nombre, edad, direccion);
             this.listaEstudiantes[this.idActual] = nuevoEstudiante;
-            this.idActual++;
             console.log(`Estudiante ${nombre} añadido con éxito.`);
+            this.idActual++;
         }
     
         eliminarEstudiante(id) {
@@ -269,13 +330,11 @@ class Estudiante extends Persona {
                 console.log(`No se encontró un estudiante con ID ${id}.`);
                 return;
             }
-        
-            // Desmatricular al estudiante de todas las asignaturas
-            estudiante._asignaturas.forEach(a => {
-                a.asignatura.listaEstudiantes = a.asignatura.listaEstudiantes.filter(est => est !== estudiante);
+    
+            estudiante.asignaturas.forEach(a => {
+                a.asignatura.eliminarEstudiante(estudiante);
             });
-        
-            // Eliminar al estudiante de la lista
+    
             delete this.listaEstudiantes[id];
             console.log(`Estudiante con ID ${id} eliminado y desmatriculado de todas las asignaturas.`);
         }
@@ -287,26 +346,49 @@ class Estudiante extends Persona {
             }
         }
     
-        calcularPromedioGeneral() {
-            let suma = 0, cantidad = 0;
-            for (const id in this.listaEstudiantes) {
-                const promedio = parseFloat(this.listaEstudiantes[id].promedioIndividual());
-                if (!isNaN(promedio)) {
-                    suma += promedio;
-                    cantidad++;
-                }
+        promedioGeneral() {
+            try {
+                const estudiantesArray = Object.values(this.listaEstudiantes);
+                if (estudiantesArray.length === 0) throw new Error("No hay estudiantes registrados.");
+    
+                const promedios = estudiantesArray.map(est => parseFloat(est.promedioIndividual())).filter(p => !isNaN(p));
+                if (promedios.length === 0) throw new Error("No hay promedios disponibles para calcular.");
+    
+                const promedioGeneral = (promedios.reduce((sum, val) => sum + val, 0) / promedios.length).toFixed(2);
+                return promedioGeneral;
+            } catch (error) {
+                console.error("Error al calcular promedio general de todos los estudiantes:", error.message);
             }
-            console.log(`Promedio general de todos los estudiantes: ${(cantidad ? suma / cantidad : 0).toFixed(2)}`);
         }
     
         buscarEstudiantePorNombre(patron) {
-            const resultados = Object.values(this.listaEstudiantes).filter(est =>
-                est.nombre.toLowerCase().includes(patron.toLowerCase())
-            );
-            if (resultados.length === 0) {
-                console.log("No se encontraron estudiantes.");
-            } else {
-                resultados.forEach(est => console.log(est.toString()));
+            try {
+                // Imprime la lista de estudiantes para verificar que está correctamente cargada
+        
+                // Convierte la lista de estudiantes en un array y filtra aquellos cuyo nombre coincide con el patrón
+                const resultados = Object.values(this.listaEstudiantes).filter(est =>
+                    est.nombre && est.nombre.toLowerCase().trim().includes(patron.toLowerCase().trim())
+                );
+                
+        
+                // Si no se encuentran coincidencias, muestra un mensaje de error y devuelve null
+                if (resultados.length === 0) {
+                    console.error(`No se encontraron estudiantes con el nombre: '${patron}'`);
+                    return null;
+                } else if (resultados.length > 1) {
+                    // Si hay múltiples coincidencias, muestra los resultados y un mensaje de error
+                    console.log("Se encontraron múltiples estudiantes:");
+                    resultados.forEach(est => console.log(est.toString()));
+                    console.error("Por favor, especifica un nombre más preciso.");
+                    return null;
+                }
+        
+                // Devuelve el estudiante encontrado si solo hay uno
+                return resultados[0];
+            } catch (error) {
+                // Maneja internamente cualquier error ocurrido durante la búsqueda
+                console.error("Error en la búsqueda del estudiante:", error.message);
+                return null;
             }
         }
     }
@@ -345,47 +427,41 @@ function inicializarDatos() {
     const direccion2 = new Direccion("Calle Invierno", 22, "3B", "18012", "Granada", "Granada");
     const direccion3 = new Direccion("Calle Verano", 5, "1C", "41013", "Sevilla", "Sevilla");
 
-    // Agregar estudiantes
-    PlistaEstudiantes.agregarEstudiante("Juan Pérez", 20, direccion1);
-    PlistaEstudiantes.agregarEstudiante("Ana López", 22, direccion2);
-    PlistaEstudiantes.agregarEstudiante("Carlos García", 21, direccion3);
+    PlistaEstudiantes.agregarEstudiante("Daniel", 20, direccion1);
+    PlistaEstudiantes.agregarEstudiante("Ana", 22, direccion2);
+    PlistaEstudiantes.agregarEstudiante("Carlos", 21, direccion3);
 
+    const estudiante1 = PlistaEstudiantes.listaEstudiantes[1];
+    const estudiante2 = PlistaEstudiantes.listaEstudiantes[2];
+    const estudiante3 = PlistaEstudiantes.listaEstudiantes[3];
 
-    // Crear asignaturas
     const matematicas = new Asignatura("Matemáticas");
     const fisica = new Asignatura("Física");
     const literatura = new Asignatura("Literatura");
 
     asignaturas.push(matematicas, fisica, literatura);
 
-    // Matricular estudiantes en asignaturas
-    const estudiante1 = PlistaEstudiantes.listaEstudiantes[1];
-    const estudiante2 = PlistaEstudiantes.listaEstudiantes[2];
-    const estudiante3 = PlistaEstudiantes.listaEstudiantes[3];
-
     estudiante1.matricular(matematicas);
     estudiante1.matricular(fisica);
-
     estudiante2.matricular(matematicas);
     estudiante2.matricular(literatura);
-
     estudiante3.matricular(fisica);
     estudiante3.matricular(literatura);
 
-    // Asignar notas
-    matematicas.asignarNota(estudiante1, 8.5);
-    matematicas.asignarNota(estudiante2, 9.0);
-
-    fisica.asignarNota(estudiante1, 7.5);
-    fisica.asignarNota(estudiante3, 8.0);
-
-    literatura.asignarNota(estudiante2, 9.5);
-    literatura.asignarNota(estudiante3, 8.5);
+    // Asignar notas a cada estudiante en sus asignaturas
+    matematicas.asignarNota(estudiante1, 8);
+    matematicas.asignarNota(estudiante2, 9);
+    fisica.asignarNota(estudiante1, 7);
+    fisica.asignarNota(estudiante3, 6);
+    literatura.asignarNota(estudiante2, 9);
+    literatura.asignarNota(estudiante3, 7);
 
     console.log("Datos inicializados correctamente.");
 }
 
 inicializarDatos();
+
+
 
 function programa() {
     
@@ -410,16 +486,17 @@ function programa() {
     
     function procesarOpcion(opcion) {
         switch (opcion) {
-            case "1":
-                
+            case "1"://Añadir estudiante
+                // Solicitar datos del estudiante
                 const nombre = prompt("Nombre del estudiante:");
                 const edad = parseInt(prompt("Edad del estudiante:"), 10);
                 const direccion = prompt("Dirección del estudiante:");
+                // Añadir estudiante a la lista
                 PlistaEstudiantes.agregarEstudiante(nombre, edad, direccion);
                 console.log(`Estudiante ${nombre} añadido con éxito.`);
                 break;
 
-            case "2":
+            case "2"://Eliminar estudiante
                 
                 try {
                     const idEliminar = parseInt(prompt("ID del estudiante a eliminar:"), 10);
@@ -430,96 +507,90 @@ function programa() {
                 }
                 break;
 
-            case "3":
+            case "3"://Mostrar estudiantes
                 
                 console.log("Lista de estudiantes:");
-                PlistaEstudiantes.mostrarEstudiantes();
+                for (const id in PlistaEstudiantes.listaEstudiantes) {
+                    console.log(PlistaEstudiantes.listaEstudiantes[id].toString());
+                    PlistaEstudiantes.listaEstudiantes[id].mostrarAsignaturas();
+                }
                 break;
 
-            case "4":
+            case "4"://Añadir asignatura
                 
                 const nombreAsignatura = prompt("Nombre de la asignatura:");
                 asignaturas.push(new Asignatura(nombreAsignatura));
                 console.log(`Asignatura ${nombreAsignatura} añadida con éxito.`);
                 break;
 
-            case "5":
+            case "5"://Mostrar asignatura
                 
                 console.log("Lista de asignaturas:");
                 asignaturas.forEach(a => console.log(`Asignatura: ${a.nombre}, Estudiantes matriculados: ${a.listaEstudiantes.length}`));
                 break;
 
-            case "6":
+            case "6"://matricular
                 
-                const idEstMatricular = parseInt(prompt("ID del estudiante a matricular:"), 10);
-                const nombreAsigMatricular = prompt("Nombre de la asignatura:");
-                const estudianteMatricular = PlistaEstudiantes.listaEstudiantes[idEstMatricular];
-                const asignaturaMatricular = asignaturas.find(a => a.nombre === nombreAsigMatricular);
-                if (estudianteMatricular && asignaturaMatricular) {
-                    estudianteMatricular.matricular(asignaturaMatricular);
-                    console.log(`Estudiante ${estudianteMatricular._nombre} matriculado en ${asignaturaMatricular.nombre}.`);
-                } else {
-                    console.log("Estudiante o asignatura no encontrados.");
-                }
+                //Solicitamos el nombre del estudiante
+                let nombreEstudiante = prompt("Introduce el nombre del estudiante");
+                //Buscamos el estudiante por nombre
+                let estudianteMatricular = PlistaEstudiantes.buscarEstudiantePorNombre(nombreEstudiante);
+                //Solicitamos el nombre de la asignatura
+                let nombreAsignaturaMat =  prompt("Introduce el nombre de la asignatura");
+                // Busca la asignatura por nombre
+                let asignaturaMatricular = asignaturas.find(a => a.nombre === nombreAsignaturaMat);
+                // Llama al método matricular 
+                estudianteMatricular.matricular(asignaturaMatricular);
+
+                // Confirma la matriculación
+                prompt(`Estudiante ${estudianteMatricular.nombre} matriculado en ${asignaturaMatricular.nombre}. Presiona Enter para continuar.`);
                 break;
 
-            case "7":
+            case "7"://Desmatricular
                 
-                const idEstDesmatricular = parseInt(prompt("ID del estudiante a desmatricular:"), 10);
-                const nombreAsigDesmatricular = prompt("Nombre de la asignatura:");
-                const estudianteDesmatricular = PlistaEstudiantes.listaEstudiantes[idEstDesmatricular];
-                const asignaturaDesmatricular = asignaturas.find(a => a.nombre === nombreAsigDesmatricular);
-                if (estudianteDesmatricular && asignaturaDesmatricular) {
-                    estudianteDesmatricular.desmatricular(asignaturaDesmatricular);
-                    console.log(`Estudiante ${estudianteDesmatricular._nombre} desmatriculado de ${asignaturaDesmatricular.nombre}.`);
-                } else {
-                    console.log("Estudiante o asignatura no encontrados.");
-                }
+                // Solicita el nombre del estudiante
+                let nombreEstudianteDes = prompt("Introduce el nombre del estudiante que desea desmatricular:");
+                // Busca el estudiante por nombre
+                let estudianteDesmatricular = PlistaEstudiantes.buscarEstudiantePorNombre(nombreEstudianteDes);
+                // Solicita el nombre de la asignatura
+                let nombreAsignaturaDes = prompt("Introduce el nombre de la asignatura de la que se desea desmatricular al estudiante:");
+                // Busca la asignatura por nombre
+                let asignaturaDesmatricular = asignaturas.find(a => a.nombre === nombreAsignaturaDes);
+
+                estudianteDesmatricular.desmatricular(asignaturaDesmatricular);
                 break;
 
-            case "8":
-                
+            case "8"://Asignar Nota
+                //Pedimos datos necesarios
                 const idEstNota = parseInt(prompt("ID del estudiante:"), 10);
                 const nombreAsigNota = prompt("Nombre de la asignatura:");
                 const nota = parseFloat(prompt("Introduce la nota (0-10):"));
+
+                //Buscamos el estudiante y la asignatura
                 const estudianteNota = PlistaEstudiantes.listaEstudiantes[idEstNota];
                 const asignaturaNota = asignaturas.find(a => a.nombre === nombreAsigNota);
-                if (estudianteNota && asignaturaNota) {
-                    asignaturaNota.asignarNota(estudianteNota, nota);
-                    console.log(`Nota ${nota} asignada a ${estudianteNota._nombre} en ${asignaturaNota.nombre}.`);
-                } else {
-                    console.log("Estudiante o asignatura no encontrados.");
-                }
+            
+                //añadimos la nota a la asignatura del alumno
+                asignaturaNota.asignarNota(estudianteNota, nota);
                 break;
 
-            case "9":
+            case "9"://Promedio estudiantes
                 
-                try {
-                    const idEstPromedio = parseInt(prompt("ID del estudiante:"), 10);
-                    const estudiantePromedio = PlistaEstudiantes.listaEstudiantes[idEstPromedio];
-                    if (!estudiantePromedio) throw new Error("Estudiante no encontrado.");
-                    if (estudiantePromedio.asignaturas.length === 0) throw new Error("El estudiante no tiene asignaturas matriculadas.");
-                    const promedio = estudiantePromedio.promedioIndividual();
-                    console.log(`Promedio de ${estudiantePromedio._nombre}: ${promedio}`);
-                } catch (error) {
-                    console.error("Error al calcular promedio:", error.message);
-                }
+                //Pedimos datos necesarios
+                const idEstPromedio = parseInt(prompt("ID del estudiante:"), 10);
+                const estudiantePromedio = PlistaEstudiantes.listaEstudiantes[idEstPromedio];
+            
+                //Calculamos el promedio del estudiante
+                const mediaEst =estudiantePromedio.promedioIndividual();
+                console.log (`El promedio de ${estudiantePromedio.nombre} es: ${mediaEst}`)
                 break;
 
-            case "10":
+            case "10"://Promedio general
+
                 
-                let sumaPromedios = 0;
-                let totalEstudiantes = 0;
-                for (const id in PlistaEstudiantes.listaEstudiantes) {
-                    const estudiante = PlistaEstudiantes.listaEstudiantes[id];
-                    const promedio = parseFloat(estudiante.promedioIndividual());
-                    if (!isNaN(promedio)) {
-                        sumaPromedios += promedio;
-                        totalEstudiantes++;
-                    }
-                }
-                const promedioGeneral = totalEstudiantes ? (sumaPromedios / totalEstudiantes).toFixed(2) : 0;
+                const promedioGeneral = PlistaEstudiantes.promedioGeneral();
                 console.log(`Promedio general de todos los estudiantes: ${promedioGeneral}`);
+
                 break;
 
             case "0":
@@ -527,7 +598,7 @@ function programa() {
                 return false;
 
             default:
-                
+                // Opción no válida
                 console.log("Opción no válida. Por favor, introduce un número entre 0 y 10.");
         }
         return true;
