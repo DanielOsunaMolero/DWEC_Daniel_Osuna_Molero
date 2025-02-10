@@ -16,4 +16,6 @@ Cambiado :
 
          -Añadidos Try and Catch en la mayoria de ellos para el control de errores
 
+         -Añadidos comentarios 
+
 
