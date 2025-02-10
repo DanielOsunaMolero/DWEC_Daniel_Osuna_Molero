@@ -1,0 +1,15 @@
+{
+  "name": "tarea-4.3---jsdoc",
+  "version": "1.0.0",
+  "main": "Proyecto.js",
+  "scripts": {
+    "docs": "jsdoc Proyecto.js -r -d docs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "jsdoc": "^4.0.4"
+  }
+}
