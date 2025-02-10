@@ -6,6 +6,7 @@ Cambiado :
 
          -Habia dos funciones dentro de la funcion programa , han sido unificadas y ahora hay una unica funcion.
 
+         -case 2 eliminar estudiante     Con su cambio respectivo en el metodo eliminarEstudiante
          -caso 6 matricular              Con su cambio respectivo en el metodo Matricular
          -caso 7 desmatricular           Con su cambio respectivo en el metodo Desmatricular
          -caso 8 asignar nota            Con su cambio respectivo en el metodo Asignar Nota

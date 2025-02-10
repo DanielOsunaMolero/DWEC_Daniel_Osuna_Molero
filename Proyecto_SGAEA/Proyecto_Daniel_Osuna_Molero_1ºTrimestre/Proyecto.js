@@ -325,24 +325,35 @@ class Estudiante extends Persona {
         }
     
         eliminarEstudiante(id) {
-            const estudiante = this.listaEstudiantes[id];
-            if (!estudiante) {
-                console.log(`No se encontró un estudiante con ID ${id}.`);
-                return;
+            try {
+                if (isNaN(id)) throw new Error("ID inválido. Por favor, introduce un número válido.");
+                const estudiante = this.listaEstudiantes[id];
+                if (!estudiante) throw new Error(`No se encontró un estudiante con ID ${id}.`);
+    
+                estudiante.asignaturas.forEach(a => {
+                    a.asignatura.eliminarEstudiante(estudiante);
+                });
+    
+                delete this.listaEstudiantes[id];
+                console.log(`Estudiante con ID ${id} eliminado y desmatriculado de todas las asignaturas.`);
+            } catch (error) {
+                console.error("Error al eliminar estudiante:", error.message);
             }
-    
-            estudiante.asignaturas.forEach(a => {
-                a.asignatura.eliminarEstudiante(estudiante);
-            });
-    
-            delete this.listaEstudiantes[id];
-            console.log(`Estudiante con ID ${id} eliminado y desmatriculado de todas las asignaturas.`);
         }
         
     
         mostrarEstudiantes() {
-            for (const id in this.listaEstudiantes) {
-                console.log(this.listaEstudiantes[id].toString());
+            try {
+                const estudiantes = Object.values(this.listaEstudiantes);
+                if (estudiantes.length === 0) throw new Error("No hay estudiantes registrados.");
+    
+                console.log("Lista de estudiantes:");
+                estudiantes.forEach(est => {
+                    console.log(est.toString());
+                    est.mostrarAsignaturas();
+                });
+            } catch (error) {
+                console.error("Error al mostrar estudiantes:", error.message);
             }
         }
     
@@ -485,8 +496,8 @@ function programa() {
             `9. Calcular promedio de un estudiante\n` +
             `10. Calcular promedio general de estudiantes\n` +
             `0. Salir\n` +
-            `-----------------------------------------------------------\n` +
-            `Escribe tu opción en la consola y presiona Enter:`
+            `Escribe tu opción en la consola y presiona Enter: \n`+
+            `-----------------------------------------------------------\n`
         );
 
         const opcion = prompt("Introduce una opción:");
@@ -500,28 +511,18 @@ function programa() {
                 const direccion = prompt("Dirección del estudiante:");
                  // Añadir estudiante a la lista
                 PlistaEstudiantes.agregarEstudiante(nombre, edad, direccion);
-                console.log(`Estudiante ${nombre} añadido con éxito.`);
+                
                 
                 break;
 
-            case "2": // Eliminar estudiante
-                try {
-                    const idEliminar = parseInt(prompt("ID del estudiante a eliminar:"), 10);
-                    if (isNaN(idEliminar)) throw new Error("ID inválido. Por favor, introduce un número válido.");
-                    PlistaEstudiantes.eliminarEstudiante(idEliminar);
-                } catch (error) {
-                    console.error("Error al eliminar estudiante:", error.message);
-                }
-                
+            case "2": //Eliminar estudiante
+                //Solicitamos el ID del estudiante
+                const idEliminar = parseInt(prompt("ID del estudiante a eliminar:"), 10);
+                PlistaEstudiantes.eliminarEstudiante(idEliminar);
                 break;
 
-            case "3": // Mostrar estudiantes
-                console.log("Lista de estudiantes:");
-                for (const id in PlistaEstudiantes.listaEstudiantes) {
-                    console.log(PlistaEstudiantes.listaEstudiantes[id].toString());
-                    PlistaEstudiantes.listaEstudiantes[id].mostrarAsignaturas();
-                }
-                
+            case "3":
+                PlistaEstudiantes.mostrarEstudiantes();
                 break;
 
             case "4": // Añadir asignatura
