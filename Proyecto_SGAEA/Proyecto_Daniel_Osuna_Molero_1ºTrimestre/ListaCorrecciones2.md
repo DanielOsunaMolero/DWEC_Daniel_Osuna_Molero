@@ -1,0 +1,1 @@
+Corregidos los case 6,7,8 y eliminados find para añadirselos a las funciones correspondientes
