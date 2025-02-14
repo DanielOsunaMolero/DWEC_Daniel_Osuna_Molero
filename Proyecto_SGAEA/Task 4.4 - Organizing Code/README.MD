@@ -1,4 +1,4 @@
-# **Modularización del Código - Tarea 4.3-jsDoc**
+# **Modularización del Código - Task 4.4 - Organizing Code**
 
 ## **Descripción**
 Para esta tarea, he reutilizado el código de la **Tarea 4.3-jsDoc**, ya que en ella el código ya estaba correctamente comentado utilizando **JSDoc**.
