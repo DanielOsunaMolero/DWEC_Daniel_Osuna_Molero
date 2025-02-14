@@ -70,5 +70,5 @@ Para ejecutar el programa, puedes seguir cualquiera de estas opciones:
 Si deseas modificar el código, asegúrate de actualizar la documentación con `npm run documenta` después de los cambios.
 
 ## Autor
-Desarrollado por Daniel Osuna Molero. 🚀
+Daniel Osuna Molero.
 
