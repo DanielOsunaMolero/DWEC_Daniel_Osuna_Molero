@@ -415,7 +415,7 @@
     
 
     
-    <h4 class="name" id="desmatricular"><span class="type-signature"></span>desmatricular<span class="signature">(asignatura)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="desmatricular"><span class="type-signature"></span>desmatricular<span class="signature">(nombreAsignatura, listaEstudiantes, asignaturasDisponibles)</span><span class="type-signature"></span></h4>
     
 
     
@@ -459,13 +459,13 @@
 
         <tr>
             
-                <td class="name"><code>asignatura</code></td>
+                <td class="name"><code>nombreAsignatura</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="Asignatura.html">Asignatura</a></span>
+<span class="param-type">string</span>
 
 
             
@@ -475,7 +475,53 @@
 
             
 
-            <td class="description last">Asignatura de la que desmatricular al estudiante.</td>
+            <td class="description last">Nombre de la asignatura de la que desmatricular al estudiante.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>listaEstudiantes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="ListaEstudiantes.html">ListaEstudiantes</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Objeto que gestiona la lista de estudiantes.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>asignaturasDisponibles</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="Asignatura.html">Asignatura</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Lista de asignaturas disponibles en el sistema.</td>
         </tr>
 
     
@@ -516,7 +562,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Proyecto.js.html">Proyecto.js</a>, <a href="Proyecto.js.html#line152">line 152</a>
+        <a href="Proyecto.js.html">Proyecto.js</a>, <a href="Proyecto.js.html#line156">line 156</a>
     </li></ul></dd>
     
 
@@ -581,7 +627,7 @@
     
 
     
-    <h4 class="name" id="matricular"><span class="type-signature"></span>matricular<span class="signature">(asignatura)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="matricular"><span class="type-signature"></span>matricular<span class="signature">(nombreAsignatura, listaEstudiantes, asignaturasDisponibles)</span><span class="type-signature"></span></h4>
     
 
     
@@ -625,13 +671,13 @@
 
         <tr>
             
-                <td class="name"><code>asignatura</code></td>
+                <td class="name"><code>nombreAsignatura</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="Asignatura.html">Asignatura</a></span>
+<span class="param-type">string</span>
 
 
             
@@ -641,7 +687,53 @@
 
             
 
-            <td class="description last">Asignatura en la que matricular al estudiante.</td>
+            <td class="description last">Nombre de la asignatura en la que matricular al estudiante.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>listaEstudiantes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="ListaEstudiantes.html">ListaEstudiantes</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Objeto que gestiona la lista de estudiantes.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>asignaturasDisponibles</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="Asignatura.html">Asignatura</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Lista de asignaturas disponibles en el sistema.</td>
         </tr>
 
     
@@ -682,7 +774,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Proyecto.js.html">Proyecto.js</a>, <a href="Proyecto.js.html#line131">line 131</a>
+        <a href="Proyecto.js.html">Proyecto.js</a>, <a href="Proyecto.js.html#line133">line 133</a>
     </li></ul></dd>
     
 
@@ -799,7 +891,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Proyecto.js.html">Proyecto.js</a>, <a href="Proyecto.js.html#line192">line 192</a>
+        <a href="Proyecto.js.html">Proyecto.js</a>, <a href="Proyecto.js.html#line196">line 196</a>
     </li></ul></dd>
     
 
@@ -887,7 +979,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Proyecto.js.html">Proyecto.js</a>, <a href="Proyecto.js.html#line175">line 175</a>
+        <a href="Proyecto.js.html">Proyecto.js</a>, <a href="Proyecto.js.html#line179">line 179</a>
     </li></ul></dd>
     
 
@@ -1031,7 +1123,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Proyecto.js.html">Proyecto.js</a>, <a href="Proyecto.js.html#line201">line 201</a>
+        <a href="Proyecto.js.html">Proyecto.js</a>, <a href="Proyecto.js.html#line205">line 205</a>
     </li></ul></dd>
     
 
@@ -1105,7 +1197,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Feb 10 2025 18:51:40 GMT+0100 (hora estándar de Europa central)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Feb 14 2025 09:49:18 GMT+0100 (hora estándar de Europa central)
 </footer>
 
 <script> prettyPrint(); </script>

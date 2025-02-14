@@ -125,12 +125,14 @@ class Estudiante extends Persona {
 
     /**
      * Matricula al estudiante en una asignatura.
-     * @param {Asignatura} asignatura - Asignatura en la que matricular al estudiante.
+     * @param {string} nombreAsignatura - Nombre de la asignatura en la que matricular al estudiante.
+     * @param {ListaEstudiantes} listaEstudiantes - Objeto que gestiona la lista de estudiantes.
+     * @param {Array<Asignatura>} asignaturasDisponibles - Lista de asignaturas disponibles en el sistema.
      * @throws {Error} Si el estudiante ya está matriculado en la asignatura.
      */
-    matricular(asignatura) {
+    matricular(nombreAsignatura, listaEstudiantes, asignaturasDisponibles) {
         try {
-            if (!asignatura) throw new Error("Asignatura no encontrada.");
+            const asignatura = listaEstudiantes.buscarAsignaturaPorNombre(nombreAsignatura, asignaturasDisponibles);
 
             if (!this.#asignaturas.some(a => a.asignatura === asignatura)) {
                 this.#asignaturas.push({ asignatura, fechaMatricula: new Date().toLocaleDateString("es-ES") });
@@ -146,12 +148,14 @@ class Estudiante extends Persona {
 
     /**
      * Desmatricula al estudiante de una asignatura.
-     * @param {Asignatura} asignatura - Asignatura de la que desmatricular al estudiante.
+     * @param {string} nombreAsignatura - Nombre de la asignatura de la que desmatricular al estudiante.
+     * @param {ListaEstudiantes} listaEstudiantes - Objeto que gestiona la lista de estudiantes.
+     * @param {Array<Asignatura>} asignaturasDisponibles - Lista de asignaturas disponibles en el sistema.
      * @throws {Error} Si el estudiante no está matriculado en la asignatura.
      */
-    desmatricular(asignatura) {
+    desmatricular(nombreAsignatura, listaEstudiantes, asignaturasDisponibles) {
         try {
-            if (!asignatura) throw new Error("Asignatura no encontrada.");
+            const asignatura = listaEstudiantes.buscarAsignaturaPorNombre(nombreAsignatura, asignaturasDisponibles);
 
             const index = this.#asignaturas.findIndex(a => a.asignatura === asignatura);
 
@@ -240,16 +244,20 @@ class Asignatura {
 
     /**
      * Asigna una nota a un estudiante en la asignatura.
-     * @param {Estudiante} estudiante - Estudiante al que asignar la nota.
-     * @param {number} nota - Nota a asignar (entre 0 y 10).
-     * @throws {Error} Si el estudiante no está matriculado o la nota es inválida.
+     * @param {string} nombreEstudiante - Nombre del estudiante al que asignar la nota.
+     * @param {number} nota - Nota a asignar (valor entre 0 y 10).
+     * @param {ListaEstudiantes} listaEstudiantesObj - Objeto que gestiona la lista de estudiantes.
+     * @throws {Error} Si el estudiante no está matriculado en la asignatura o la nota es inválida.
      */
-    asignarNota(estudiante, nota) {
+    asignarNota(nombreEstudiante, nota, listaEstudiantesObj) {
         try {
-            if (!estudiante) throw new Error("Estudiante no encontrado.");
+            const estudiante = listaEstudiantesObj.buscarEstudiantePorNombre(nombreEstudiante);
+            if (!estudiante) throw new Error(`Estudiante ${nombreEstudiante} no encontrado.`);
+
             if (!this.listaEstudiantes.some(e => e.id === estudiante.id)) {
                 throw new Error(`El estudiante ${estudiante.nombre} no está matriculado en ${this.nombre}.`);
             }
+
             if (isNaN(nota) || nota < 0 || nota > 10) {
                 throw new Error("Nota inválida. Debe estar entre 0 y 10.");
             }
@@ -569,52 +577,48 @@ function programa() {
                 break;
 
             case "6": 
-                /**
-                 * Matricula a un estudiante en una asignatura.
-                 * Solicita el nombre del estudiante y de la asignatura.
-                 */
-                let nombreEstudiante = prompt("Introduce el nombre del estudiante");
-                let estudianteMatricular = PlistaEstudiantes.buscarEstudiantePorNombre(nombreEstudiante);
-                let nombreAsignaturaMat = prompt("Introduce el nombre de la asignatura");
-                let asignaturaMatricular = asignaturas.find(a => a.nombre === nombreAsignaturaMat);
-
-                // Llama al método matricular 
-                estudianteMatricular.matricular(asignaturaMatricular);
-
-                prompt(`Estudiante ${estudianteMatricular.nombre} matriculado en ${asignaturaMatricular.nombre}. Presiona Enter para continuar.`);
-                
-                break;
-
-            case "7": // Desmatricular estudiante de asignatura
+            /**
+             * Matricula a un estudiante en una asignatura.
+             * Solicita el nombre del estudiante y de la asignatura.
+             */
+            const nombreEstudiante = prompt("Introduce el nombre del estudiante:");
+            const estudianteMatricular = PlistaEstudiantes.buscarEstudiantePorNombre(nombreEstudiante);
+        
+            if (estudianteMatricular) {
+                const nombreAsignaturaMat = prompt("Introduce el nombre de la asignatura:");
+                estudianteMatricular.matricular(nombreAsignaturaMat, PlistaEstudiantes, asignaturas);
+            }
+            break;
+            
+            case "7":
                 /**
                  * Desmatricula a un estudiante de una asignatura.
                  * Solicita el nombre del estudiante y de la asignatura.
                  */
-                let nombreEstudianteDes = prompt("Introduce el nombre del estudiante que desea desmatricular:");
-                let estudianteDesmatricular = PlistaEstudiantes.buscarEstudiantePorNombre(nombreEstudianteDes);
-                let nombreAsignaturaDes = prompt("Introduce el nombre de la asignatura de la que se desea desmatricular al estudiante:");
-                let asignaturaDesmatricular = asignaturas.find(a => a.nombre === nombreAsignaturaDes);
-
-                estudianteDesmatricular.desmatricular(asignaturaDesmatricular);
-
+                const nombreEstudianteDes = prompt("Introduce el nombre del estudiante que desea desmatricular:");
+                const estudianteDesmatricular = PlistaEstudiantes.buscarEstudiantePorNombre(nombreEstudianteDes);
+            
+                if (estudianteDesmatricular) {
+                    const nombreAsignaturaDes = prompt("Introduce el nombre de la asignatura de la que se desea desmatricular al estudiante:");
+                    estudianteDesmatricular.desmatricular(nombreAsignaturaDes, PlistaEstudiantes, asignaturas);
+                }
                 break;
-
-            case "8": // Asignar nota a un estudiante
+            
+            case "8":
                 /**
                  * Asigna una nota a un estudiante en una asignatura específica.
-                 * Solicita el ID del estudiante, el nombre de la asignatura y la nota.
+                 * Solicita el nombre del estudiante, el nombre de la asignatura y la nota.
                  */
-                const idEstNota = parseInt(prompt("ID del estudiante:"), 10);
+                const nombreEstNota = prompt("Nombre del estudiante:");
                 const nombreAsigNota = prompt("Nombre de la asignatura:");
                 const nota = parseFloat(prompt("Introduce la nota (0-10):"));
-                //Buscamos el estudiante y la asignatura
-                const estudianteNota = PlistaEstudiantes.listaEstudiantes[idEstNota];
-                const asignaturaNota = asignaturas.find(a => a.nombre === nombreAsigNota);
-
-                //añadimos la nota a la asignatura del alumno
-                asignaturaNota.asignarNota(estudianteNota, nota);
-
+            
+                const asignatura = PlistaEstudiantes.buscarAsignaturaPorNombre(nombreAsigNota, asignaturas);
+                if (asignatura) {
+                    asignatura.asignarNota(nombreEstNota, nota, PlistaEstudiantes);
+                }
                 break;
+            
 
             case "9": 
                 /**
