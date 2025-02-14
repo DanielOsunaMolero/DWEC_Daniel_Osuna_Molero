@@ -4,12 +4,19 @@
   "description": "Proyecto SGAEA",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "documenta": "jsdoc \"js/*.js\" -r -d documentacion",
+    "limpia": "rm -rf node_modules documentacion"
   },
   "keywords": [
     "organizing",
     "code"
   ],
   "author": "Daniel Osuna Molero",
-  "license": "ISC"
+  "license": "ISC",
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {
+    "jsdoc": "^4.0.4"
+  }
 }
