@@ -141,51 +141,46 @@ function programa() {
                 break;
 
             case "6": 
-                /**
-                 * Matricula a un estudiante en una asignatura.
-                 * Solicita el nombre del estudiante y de la asignatura.
-                 */
-                let nombreEstudiante = prompt("Introduce el nombre del estudiante");
-                let estudianteMatricular = PlistaEstudiantes.buscarEstudiantePorNombre(nombreEstudiante);
-                let nombreAsignaturaMat = prompt("Introduce el nombre de la asignatura");
-                let asignaturaMatricular = asignaturas.find(a => a.nombre === nombreAsignaturaMat);
-
-                // Llama al método matricular 
-                estudianteMatricular.matricular(asignaturaMatricular);
-
-                prompt(`Estudiante ${estudianteMatricular.nombre} matriculado en ${asignaturaMatricular.nombre}. Presiona Enter para continuar.`);
-                
-                break;
-
-            case "7": // Desmatricular estudiante de asignatura
+            /**
+             * Matricula a un estudiante en una asignatura.
+             * Solicita el nombre del estudiante y de la asignatura.
+             */
+            const nombreEstudiante = prompt("Introduce el nombre del estudiante:");
+            const estudianteMatricular = PlistaEstudiantes.buscarEstudiantePorNombre(nombreEstudiante);
+        
+            if (estudianteMatricular) {
+                const nombreAsignaturaMat = prompt("Introduce el nombre de la asignatura:");
+                estudianteMatricular.matricular(nombreAsignaturaMat, PlistaEstudiantes, asignaturas);
+            }
+            break;
+            
+            case "7":
                 /**
                  * Desmatricula a un estudiante de una asignatura.
                  * Solicita el nombre del estudiante y de la asignatura.
                  */
-                let nombreEstudianteDes = prompt("Introduce el nombre del estudiante que desea desmatricular:");
-                let estudianteDesmatricular = PlistaEstudiantes.buscarEstudiantePorNombre(nombreEstudianteDes);
-                let nombreAsignaturaDes = prompt("Introduce el nombre de la asignatura de la que se desea desmatricular al estudiante:");
-                let asignaturaDesmatricular = asignaturas.find(a => a.nombre === nombreAsignaturaDes);
-
-                estudianteDesmatricular.desmatricular(asignaturaDesmatricular);
-
+                const nombreEstudianteDes = prompt("Introduce el nombre del estudiante que desea desmatricular:");
+                const estudianteDesmatricular = PlistaEstudiantes.buscarEstudiantePorNombre(nombreEstudianteDes);
+            
+                if (estudianteDesmatricular) {
+                    const nombreAsignaturaDes = prompt("Introduce el nombre de la asignatura de la que se desea desmatricular al estudiante:");
+                    estudianteDesmatricular.desmatricular(nombreAsignaturaDes, PlistaEstudiantes, asignaturas);
+                }
                 break;
-
-            case "8": // Asignar nota a un estudiante
+            
+            case "8":
                 /**
                  * Asigna una nota a un estudiante en una asignatura específica.
-                 * Solicita el ID del estudiante, el nombre de la asignatura y la nota.
+                 * Solicita el nombre del estudiante, el nombre de la asignatura y la nota.
                  */
-                const idEstNota = parseInt(prompt("ID del estudiante:"), 10);
+                const nombreEstNota = prompt("Nombre del estudiante:");
                 const nombreAsigNota = prompt("Nombre de la asignatura:");
                 const nota = parseFloat(prompt("Introduce la nota (0-10):"));
-                //Buscamos el estudiante y la asignatura
-                const estudianteNota = PlistaEstudiantes.listaEstudiantes[idEstNota];
-                const asignaturaNota = asignaturas.find(a => a.nombre === nombreAsigNota);
-
-                //añadimos la nota a la asignatura del alumno
-                asignaturaNota.asignarNota(estudianteNota, nota);
-
+            
+                const asignatura = PlistaEstudiantes.buscarAsignaturaPorNombre(nombreAsigNota, asignaturas);
+                if (asignatura) {
+                    asignatura.asignarNota(nombreEstNota, nota, PlistaEstudiantes);
+                }
                 break;
 
             case "9": 

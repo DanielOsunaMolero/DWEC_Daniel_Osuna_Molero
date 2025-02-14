@@ -32,12 +32,14 @@ export class Estudiante extends Persona {
 
     /**
      * Matricula al estudiante en una asignatura.
-     * @param {Asignatura} asignatura - Asignatura en la que matricular al estudiante.
+     * @param {string} nombreAsignatura - Nombre de la asignatura en la que matricular al estudiante.
+     * @param {ListaEstudiantes} listaEstudiantes - Objeto que gestiona la lista de estudiantes.
+     * @param {Array<Asignatura>} asignaturasDisponibles - Lista de asignaturas disponibles en el sistema.
      * @throws {Error} Si el estudiante ya está matriculado en la asignatura.
      */
-    matricular(asignatura) {
+    matricular(nombreAsignatura, listaEstudiantes, asignaturasDisponibles) {
         try {
-            if (!asignatura) throw new Error("Asignatura no encontrada.");
+            const asignatura = listaEstudiantes.buscarAsignaturaPorNombre(nombreAsignatura, asignaturasDisponibles);
 
             if (!this.#asignaturas.some(a => a.asignatura === asignatura)) {
                 this.#asignaturas.push({ asignatura, fechaMatricula: new Date().toLocaleDateString("es-ES") });
@@ -53,12 +55,14 @@ export class Estudiante extends Persona {
 
     /**
      * Desmatricula al estudiante de una asignatura.
-     * @param {Asignatura} asignatura - Asignatura de la que desmatricular al estudiante.
+     * @param {string} nombreAsignatura - Nombre de la asignatura de la que desmatricular al estudiante.
+     * @param {ListaEstudiantes} listaEstudiantes - Objeto que gestiona la lista de estudiantes.
+     * @param {Array<Asignatura>} asignaturasDisponibles - Lista de asignaturas disponibles en el sistema.
      * @throws {Error} Si el estudiante no está matriculado en la asignatura.
      */
-    desmatricular(asignatura) {
+    desmatricular(nombreAsignatura, listaEstudiantes, asignaturasDisponibles) {
         try {
-            if (!asignatura) throw new Error("Asignatura no encontrada.");
+            const asignatura = listaEstudiantes.buscarAsignaturaPorNombre(nombreAsignatura, asignaturasDisponibles);
 
             const index = this.#asignaturas.findIndex(a => a.asignatura === asignatura);
 

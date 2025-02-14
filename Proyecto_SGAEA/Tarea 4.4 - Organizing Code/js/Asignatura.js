@@ -36,16 +36,20 @@ export class Asignatura {
 
     /**
      * Asigna una nota a un estudiante en la asignatura.
-     * @param {Estudiante} estudiante - Estudiante al que asignar la nota.
-     * @param {number} nota - Nota a asignar (entre 0 y 10).
-     * @throws {Error} Si el estudiante no está matriculado o la nota es inválida.
+     * @param {string} nombreEstudiante - Nombre del estudiante al que asignar la nota.
+     * @param {number} nota - Nota a asignar (valor entre 0 y 10).
+     * @param {ListaEstudiantes} listaEstudiantesObj - Objeto que gestiona la lista de estudiantes.
+     * @throws {Error} Si el estudiante no está matriculado en la asignatura o la nota es inválida.
      */
-    asignarNota(estudiante, nota) {
+    asignarNota(nombreEstudiante, nota, listaEstudiantesObj) {
         try {
-            if (!estudiante) throw new Error("Estudiante no encontrado.");
+            const estudiante = listaEstudiantesObj.buscarEstudiantePorNombre(nombreEstudiante);
+            if (!estudiante) throw new Error(`Estudiante ${nombreEstudiante} no encontrado.`);
+
             if (!this.listaEstudiantes.some(e => e.id === estudiante.id)) {
                 throw new Error(`El estudiante ${estudiante.nombre} no está matriculado en ${this.nombre}.`);
             }
+
             if (isNaN(nota) || nota < 0 || nota > 10) {
                 throw new Error("Nota inválida. Debe estar entre 0 y 10.");
             }
