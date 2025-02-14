@@ -408,6 +408,24 @@ class ListaEstudiantes {
     }
 
     /**
+     * Busca una asignatura por su nombre en la lista de asignaturas disponibles.
+     * @param {string} nombreAsignatura - Nombre de la asignatura a buscar.
+     * @param {Array<Asignatura>} asignaturasDisponibles - Lista de asignaturas disponibles.
+     * @returns {Asignatura} Asignatura encontrada.
+     * @throws {Error} Si la asignatura no se encuentra en la lista.
+     * @throws {Error} Si no se proporciona un nombre de asignatura válido.
+     * @throws {Error} Si no hay asignaturas disponibles.
+     * @throws {Error} Si no se proporciona una lista de asignaturas.
+     **/
+    buscarAsignaturaPorNombre(nombreAsignatura, asignaturasDisponibles) {
+        const asignatura = asignaturasDisponibles.find(a => a.nombre === nombreAsignatura);
+        if (!asignatura) {
+            throw new Error(`Asignatura '${nombreAsignatura}' no encontrada.`);
+        }
+        return asignatura;
+    }
+
+    /**
      * Busca un estudiante por su nombre.
      * @param {string} patron - Patrón o nombre a buscar.
      * @returns {Estudiante|null} Estudiante encontrado o null si no se encuentra.
