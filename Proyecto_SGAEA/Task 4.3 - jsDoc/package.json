@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "Proyecto.js",
   "scripts": {
-    "docs": "jsdoc Proyecto.js -r -d docs"
+   "documenta": "jsdoc Proyecto.js -r -d documentacion",
+   "limpia": "rm -rf node_modules documentacion"
   },
   "keywords": [],
   "author": "",
