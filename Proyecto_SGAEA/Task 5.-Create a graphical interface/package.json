@@ -4,7 +4,8 @@
   "description": "Proyecto SGAEA",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+       "documenta": "jsdoc Proyecto.js -r -d documentacion",
+       "limpia": "rm -rf node_modules documentacion"
   },
   "keywords": [
     "organizing",

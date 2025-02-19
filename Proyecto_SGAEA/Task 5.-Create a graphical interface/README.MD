@@ -1,10 +1,72 @@
-Para esta tarea he usado el codigo de la Tarea 4.3-jsDoc ya que estaba el codigo ya comentado
+# 📚 SGAEA - Interfaz Gráfica
 
-Para la modularizacion unicamente he copiado y pegado el codigo de las clases cada una en su correspondiente archivo
-junto a la exportacion e immportacion de estas segun sea necesario ya sea en otras clases o en el main
+## 📌 Descripción
+SGAEA es una interfaz gráfica para gestionar estudiantes y asignaturas en un entorno educativo. Permite agregar, eliminar y modificar estudiantes y asignaturas, así como matricular y desmatricular estudiantes en asignaturas y asignar calificaciones.
 
-Por ejemplo en la clase ListaEstudiantes es necesario importar la clase Estudiante
+## 🚀 Características
+- 📋 **Gestión de estudiantes**: Agregar, eliminar y listar estudiantes.
+- 📚 **Gestión de asignaturas**: Agregar, eliminar y listar asignaturas.
+- 🎓 **Matriculación**: Inscribir y desinscribir estudiantes en asignaturas.
+- 📊 **Calificaciones**: Asignar notas y calcular promedios individuales y generales.
+- 💾 **Persistencia**: Uso de `localStorage` para guardar los datos.
+- 🎨 **Interfaz amigable**: Diseño con HTML, CSS y manipulación del DOM.
 
-Ejemplo de importacion : *import { Estudiante } from './Estudiante.js';*
+## 🛠️ Tecnologías Utilizadas
+- HTML
+- CSS
+- JavaScript (Manipulación del DOM y BOM)
 
-Ejemplo de exportacion de una clase : *export class ListaEstudiantes*
+## 📂 Estructura del Proyecto
+```
+📦 Proyecto SGAEA
+ ├── 📂 js
+ │   ├── Asignatura.js
+ │   ├── Direccion.js
+ │   ├── Estudiante.js
+ │   ├── script.js  (Lógica principal)
+ ├── 📂 styles
+ │   ├── styles.css  (Estilos de la interfaz)
+ ├── index.html  (Interfaz principal)
+ ├── README.md  (Este archivo)
+```
+
+## 🎯 Funcionalidades Principales
+### 1️⃣ **Gestión de Estudiantes**
+- Agregar estudiante (nombre, edad, dirección).
+- Eliminar estudiante por ID.
+- Listar estudiantes con sus asignaturas.
+
+### 2️⃣ **Gestión de Asignaturas**
+- Agregar una nueva asignatura.
+- Eliminar una asignatura.
+- Listar todas las asignaturas disponibles.
+
+### 3️⃣ **Matriculación y Notas**
+- Matricular un estudiante en una asignatura.
+- Desmatricular un estudiante.
+- Asignar una nota a un estudiante en una asignatura.
+- Calcular el promedio de un estudiante.
+- Calcular el promedio general de todos los estudiantes.
+
+## 🏗️ Instalación y Uso
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/tuusuario/SGAEA.git
+   ```
+2. Abre `index.html` en tu navegador.
+3. ¡Empieza a gestionar estudiantes y asignaturas! 🎓
+
+## 📌 Datos de Prueba
+Por defecto, al abrir la aplicación por primera vez, se inicializarán estos datos:
+- **Estudiantes:** Carlos López, Ana Sánchez, Luis Martínez.
+- **Asignaturas:** Matemáticas, Física.
+
+## 🤝 Contribuciones
+Si deseas contribuir, ¡eres bienvenido! Haz un **fork**, crea una **rama**, y envía un **pull request**.
+
+## 📜 Licencia
+Este proyecto está bajo la licencia MIT.
+
+---
+📧 Para más información, contáctanos en *correo@ejemplo.com*.
+
