@@ -51,7 +51,7 @@ SGAEA es una interfaz gráfica para gestionar estudiantes y asignaturas en un en
 ## 🏗️ Instalación y Uso
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/tuusuario/SGAEA.git
+   git clone https://github.com/DanielOsunaMolero/DWEC_Daniel_Osuna_Molero.git
    ```
 2. Abre `index.html` en tu navegador.
 3. ¡Empieza a gestionar estudiantes y asignaturas
