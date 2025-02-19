@@ -53,9 +53,12 @@ body {
 
 }
 
-h1, h2 {
+h1 {
     text-align: center;
     color: #333;
+}
+h2{
+    color: #eee;
 }
 
 input, button {
