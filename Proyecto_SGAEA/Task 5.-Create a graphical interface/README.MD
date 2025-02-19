@@ -61,12 +61,11 @@ Por defecto, al abrir la aplicación por primera vez, se inicializarán estos da
 - **Estudiantes:** Carlos López, Ana Sánchez, Luis Martínez.
 - **Asignaturas:** Matemáticas, Física.
 
-## 🤝 Contribuciones
-Si deseas contribuir, ¡eres bienvenido! Haz un **fork**, crea una **rama**, y envía un **pull request**.
 
-## 📜 Licencia
-Este proyecto está bajo la licencia MIT.
+
+## 📜 Creado por : Daniel Osuna Molero
+
 
 ---
-📧 Para más información, contáctanos en *correo@ejemplo.com*.
+
 
