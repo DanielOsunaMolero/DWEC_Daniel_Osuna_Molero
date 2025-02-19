@@ -54,7 +54,7 @@ SGAEA es una interfaz gráfica para gestionar estudiantes y asignaturas en un en
    git clone https://github.com/tuusuario/SGAEA.git
    ```
 2. Abre `index.html` en tu navegador.
-3. ¡Empieza a gestionar estudiantes y asignaturas! 🎓
+3. ¡Empieza a gestionar estudiantes y asignaturas
 
 ## 📌 Datos de Prueba
 Por defecto, al abrir la aplicación por primera vez, se inicializarán estos datos:
@@ -64,8 +64,4 @@ Por defecto, al abrir la aplicación por primera vez, se inicializarán estos da
 
 
 ## 📜 Creado por : Daniel Osuna Molero
-
-
----
-
 
