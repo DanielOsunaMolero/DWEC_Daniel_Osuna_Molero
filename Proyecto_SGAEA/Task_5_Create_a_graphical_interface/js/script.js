@@ -159,26 +159,9 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll("input").forEach(input => input.value = "");
     }
 
-    // Añadir datos de prueba si no existen en localStorage
-    if (alumnos.length === 0 && asignaturas.length === 0) {//si esta vacio introduce datos
-        alumnos.push(
-            { id: nextId++, nombre: "Carlos", edad: 20, direccion: { calle: "Av. Siempre Viva", numero: 742, piso: "A", codPostal: "28010", provincia: "Madrid", localidad: "Madrid" }, asignaturas: [], notas: {} },
-            { id: nextId++, nombre: "Ana", edad: 22, direccion: { calle: "Calle Primavera", numero: 12, piso: "2B", codPostal: "18012", provincia: "Granada", localidad: "Granada" }, asignaturas: [], notas: {} },
-            { id: nextId++, nombre: "Luis", edad: 21, direccion: { calle: "Paseo del Prado", numero: 5, piso: "3C", codPostal: "28014", provincia: "Madrid", localidad: "Madrid" }, asignaturas: [], notas: {} }
-        );
-        
-        asignaturas.push("Matemáticas", "Física");
-        
-        localStorage.setItem("alumnos", JSON.stringify(alumnos));//Guarda la lista de estudiantes en el localStorage
-        localStorage.setItem("asignaturas", JSON.stringify(asignaturas));//Guarda la lista de asignaturas en el localStorage
-        localStorage.setItem("nextId", nextId);//
-    }
-
-
-
     //Botones para las acciones del DOM
     document.getElementById("btn-limpiar-campos").addEventListener("click", limpiarCampos);
-    document.getElementById("btn-matricular").addEventListener("click", agregarEstudiante);
+    document.getElementById("btn-agregar-estudiante").addEventListener("click", agregarEstudiante);
     document.getElementById("btn-agregar-asignatura").addEventListener("click", agregarAsignatura);
     document.getElementById("btn-matricular-asignatura").addEventListener("click", matricularEnAsignatura);
     document.getElementById("btn-asignar-nota").addEventListener("click", asignarNota);
