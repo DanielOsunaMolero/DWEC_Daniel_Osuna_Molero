@@ -24,15 +24,16 @@ document.addEventListener("DOMContentLoaded", function () {
         const lista = document.getElementById("lista-asignaturas");
         lista.innerHTML = "";
         asignaturas.forEach((asignatura, index) => {
-            const li = document.createElement("li");
-            li.textContent = asignatura;
-            lista.appendChild(li);
+            const li = document.createElement("li");// Crea un elemento li
+            li.textContent = asignatura; // Le coloca al li el nombre de la asignatura
+            lista.appendChild(li);// Añade el li a la lista de asignaturas
         });
     }
 
     function agregarEstudiante() {
         let nextId = alumnos.length > 0 ? Math.max(...alumnos.map(a => a.id)) + 1 : 1; 
         //Recorre la lista de estudiantes y obtiene el id más alto y le suma 1 a ese ID para obtener el ID del nuevo estudiante
+        //Recoge los valores del formulario
         const nombre = document.getElementById("nombre").value;
         const edad = document.getElementById("edad").value;
         const calle = document.getElementById("calle").value;
@@ -42,11 +43,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const provincia = document.getElementById("provincia").value;
         const localidad = document.getElementById("localidad").value;
 
+        //validamos los datos
         if (nombre && edad && codPostal.length === 5) {
             alumnos.push({ id: nextId++, nombre, edad, direccion: { calle, numero, piso, codPostal, provincia, localidad }, asignaturas: [], notas: {} });
-            localStorage.setItem("nextId", nextId);
-            localStorage.setItem("alumnos", JSON.stringify(alumnos));
-            renderLista();
+            localStorage.setItem("nextId", nextId);//Guarda el ID del nuevo estudiante
+            localStorage.setItem("alumnos", JSON.stringify(alumnos));//Guarda la lista de estudiantes en el localStorage
+            renderLista(); //actualiza los datos de la lista en el DOM
         } else {
             alert("Por favor, completa todos los campos correctamente.");
         }
@@ -54,10 +56,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function eliminarEstudiante() {
         const id = document.getElementById("id-eliminar").value;
-        const index = alumnos.findIndex(a => a.id == id);
+        const index = alumnos.findIndex(a => a.id == id);//Busca el estudiante por ID
         if (index !== -1) {
             alumnos.splice(index, 1);
-            localStorage.setItem("alumnos", JSON.stringify(alumnos));
+            localStorage.setItem("alumnos", JSON.stringify(alumnos));//Guarda la lista de estudiantes en el localStorage
             renderLista();
             alert("Estudiante eliminado correctamente.");
         } else {
@@ -69,9 +71,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const nombreAsignatura = document.getElementById("nombre-asignatura").value;
         if (nombreAsignatura && !asignaturas.includes(nombreAsignatura)) {
             asignaturas.push(nombreAsignatura);
-            localStorage.setItem("asignaturas", JSON.stringify(asignaturas));
+            localStorage.setItem("asignaturas", JSON.stringify(asignaturas));//Guarda la lista de asignaturas en el localStorage
             alert("Asignatura agregada correctamente.");
-            renderListaAsignaturas();
+            renderListaAsignaturas();//Actualiza la lista de asignaturas en el DOM
         }
     }
 
@@ -82,8 +84,9 @@ document.addEventListener("DOMContentLoaded", function () {
             alumnos.forEach(alumno => {
                 alumno.asignaturas = alumno.asignaturas.filter(asig => asig !== nombreAsignatura);
             });
-            localStorage.setItem("asignaturas", JSON.stringify(asignaturas));
-            localStorage.setItem("alumnos", JSON.stringify(alumnos));
+            localStorage.setItem("asignaturas", JSON.stringify(asignaturas));//Guarda la lista de asignaturas en el localStorage
+            localStorage.setItem("alumnos", JSON.stringify(alumnos));//Guarda la lista de estudiantes en el localStorage
+            //Actualizamos las dos listas del DOM
             renderListaAsignaturas();
             renderLista();
             alert("Asignatura eliminada correctamente.");
@@ -104,20 +107,21 @@ document.addEventListener("DOMContentLoaded", function () {
         const nombreAsignatura = document.getElementById("nombre-asignatura-matricula").value;
         const alumno = alumnos.find(a => a.nombre === nombreEstudiante);
         if (alumno && asignaturas.includes(nombreAsignatura)) {
-            alumno.asignaturas.push(nombreAsignatura);
-            localStorage.setItem("alumnos", JSON.stringify(alumnos));
+            alumno.asignaturas.push(nombreAsignatura);//Añade la asignatura al estudiante
+            localStorage.setItem("alumnos", JSON.stringify(alumnos));//ºGuarda la lista de estudiantes en el localStorage
             alert("Matriculación realizada correctamente.");
         }
-        renderLista();
+        renderLista();//Actualiza la lista de estudiantes en el DOM
     }
 
     function desmatricularDeAsignatura() {
+        //Recoge los valores del formulario correspondiente
         const nombreEstudiante = document.getElementById("nombre-estudiante-desmatricula").value;
         const nombreAsignatura = document.getElementById("nombre-asignatura-desmatricula").value;
         const alumno = alumnos.find(a => a.nombre === nombreEstudiante);
         if (alumno) {
-            alumno.asignaturas = alumno.asignaturas.filter(a => a !== nombreAsignatura);
-            localStorage.setItem("alumnos", JSON.stringify(alumnos));
+            alumno.asignaturas = alumno.asignaturas.filter(a => a !== nombreAsignatura);//Elimina la asignatura de las asignaturas del estudiante
+            localStorage.setItem("alumnos", JSON.stringify(alumnos));//ºGuarda la lista de estudiantes en el localStorage
             alert("Desmatriculación realizada correctamente.");
         }
         renderLista();
@@ -129,8 +133,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const nota = parseFloat(document.getElementById("nota").value);
         const alumno = alumnos.find(a => a.nombre === nombreEstudiante);
         if (alumno && asignaturas.includes(nombreAsignatura)) {
-            alumno.notas[nombreAsignatura] = nota;
-            localStorage.setItem("alumnos", JSON.stringify(alumnos));
+            alumno.notas[nombreAsignatura] = nota;//Asigna la nota al estudiante
+            localStorage.setItem("alumnos", JSON.stringify(alumnos));//ºGuarda la lista de estudiantes en el localStorage
             alert("Nota asignada correctamente.");
         }
     }
@@ -139,8 +143,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const nombreEstudiante = document.getElementById("nombre-estudiante-promedio").value;
         const alumno = alumnos.find(a => a.nombre === nombreEstudiante);
         if (alumno) {
-            const notas = Object.values(alumno.notas);
-            const promedio = notas.reduce((sum, nota) => sum + nota, 0) / notas.length;
+            const notas = Object.values(alumno.notas);//Obtiene las notas
+            const promedio = notas.reduce((sum, nota) => sum + nota, 0) / notas.length;//Calcula el promedio
             alert(`El promedio de ${nombreEstudiante} es: ${promedio.toFixed(2)}`);
         }
     }
@@ -156,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Añadir datos de prueba si no existen en localStorage
-    if (alumnos.length === 0 && asignaturas.length === 0) {
+    if (alumnos.length === 0 && asignaturas.length === 0) {//si esta vacio introduce datos
         alumnos.push(
             { id: nextId++, nombre: "Carlos", edad: 20, direccion: { calle: "Av. Siempre Viva", numero: 742, piso: "A", codPostal: "28010", provincia: "Madrid", localidad: "Madrid" }, asignaturas: [], notas: {} },
             { id: nextId++, nombre: "Ana", edad: 22, direccion: { calle: "Calle Primavera", numero: 12, piso: "2B", codPostal: "18012", provincia: "Granada", localidad: "Granada" }, asignaturas: [], notas: {} },
@@ -165,13 +169,14 @@ document.addEventListener("DOMContentLoaded", function () {
         
         asignaturas.push("Matemáticas", "Física");
         
-        localStorage.setItem("alumnos", JSON.stringify(alumnos));
-        localStorage.setItem("asignaturas", JSON.stringify(asignaturas));
-        localStorage.setItem("nextId", nextId);
+        localStorage.setItem("alumnos", JSON.stringify(alumnos));//Guarda la lista de estudiantes en el localStorage
+        localStorage.setItem("asignaturas", JSON.stringify(asignaturas));//Guarda la lista de asignaturas en el localStorage
+        localStorage.setItem("nextId", nextId);//
     }
 
 
 
+    //Botones para las acciones del DOM
     document.getElementById("btn-limpiar-campos").addEventListener("click", limpiarCampos);
     document.getElementById("btn-matricular").addEventListener("click", agregarEstudiante);
     document.getElementById("btn-agregar-asignatura").addEventListener("click", agregarAsignatura);

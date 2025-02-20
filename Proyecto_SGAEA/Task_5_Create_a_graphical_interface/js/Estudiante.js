@@ -97,13 +97,6 @@ export class Estudiante extends Persona {
         }
     }
 
-    /**
-     * Muestra en consola las asignaturas en las que el estudiante está matriculado.
-     */
-    mostrarAsignaturas() {
-        console.log(`Asignaturas de ${this.nombre}:`);
-        this.#asignaturas.forEach(a => console.log(`- ${a.asignatura.nombre}`));
-    }
 
     /**
      * Devuelve la representación en cadena del estudiante.

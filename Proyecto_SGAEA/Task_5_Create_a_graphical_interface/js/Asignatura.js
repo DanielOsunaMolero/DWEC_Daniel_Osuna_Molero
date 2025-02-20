@@ -83,13 +83,6 @@ export class Asignatura {
             : "No hay calificaciones disponibles.";
     }
 
-    /**
-     * Muestra en consola los estudiantes matriculados en la asignatura.
-     */
-    mostrarEstudiantes() {
-        console.log(`Estudiantes matriculados en ${this.nombre}:`);
-        this.listaEstudiantes.forEach(est => console.log(`- ${est.nombre}`));
-    }
     
     /**
      * Elimina un estudiante de la asignatura y sus calificaciones.
@@ -101,11 +94,4 @@ export class Asignatura {
         console.log(`Estudiante ${estudiante.nombre} eliminado de la asignatura ${this.nombre}.`);
     }
 
-    /**
-     * Devuelve la representación en cadena de la asignatura.
-     * @returns {string} Representación en cadena de la asignatura.
-     */
-    toString() {
-        return `Asignatura: ${this.nombre}, Estudiantes matriculados: ${this.listaEstudiantes.length}`;
-    }
 }
