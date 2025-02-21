@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function limpiarCampos() {
-        document.querySelectorAll("input").forEach(input => input.value = "");
+        document.querySelectorAll("input").forEach(input => input.value = "");//recorre todos los inputs y les coloca un valor vacio
     }
 
     //Botones para las acciones del DOM
