@@ -1,14 +1,14 @@
 <script>
+import Eventos from '@/nodos/Eventos.vue';
+
 const mensaje = "Hola desde MiComponente";
 </script>
 
 
 <template>
-    <article classs="flex-column">
-        <p> {{ mensaje }}</p>
 
-    </article>
-
+    <Eventos/>
+    
 </template>
 
 <style scoped>

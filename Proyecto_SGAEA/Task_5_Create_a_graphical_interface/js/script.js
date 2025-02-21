@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function agregarEstudiante() {
-        let nextId = alumnos.length > 0 ? Math.max(...alumnos.map(a => a.id)) + 1 : 1; 
+        let nextId = alumnos.length > 0 ? Math.max(...alumnos.map(a =>a.id)) + 1 : 1; 
         //Recorre la lista de estudiantes y obtiene el id más alto y le suma 1 a ese ID para obtener el ID del nuevo estudiante
         //Recoge los valores del formulario
         const nombre = document.getElementById("nombre").value;
