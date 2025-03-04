@@ -1,10 +1,10 @@
-# 🐶 PerroVerso 🚀
+# PerroVerso
 
 **PerroVerso** es un sitio web futurista que muestra imágenes aleatorias de perros usando **The Dog API**, con un diseño moderno basado en **TailwindCSS** y **Parcel**.  
 
 ---
 
-## 📌 Tecnologías utilizadas
+## Tecnologías utilizadas
 - **TailwindCSS**
 - **JavaScript**
 - **Parcel**
@@ -12,7 +12,7 @@
 
 ---
 
-## 🚀 Instalación y configuración
+## Instalación y configuración
 
 ### **Clonar el repositorio**
 ```bash
@@ -39,7 +39,7 @@ Parcel generará los archivos optimizados en la carpeta **`dist/`**.
 
 ---
 
-## 🏠 **Estructura del proyecto**
+## **Estructura del proyecto**
 ```bash
 /perroverso
 │── /src
