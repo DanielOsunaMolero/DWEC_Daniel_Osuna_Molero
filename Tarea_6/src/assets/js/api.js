@@ -2,8 +2,8 @@
 const apiKey = "";
 const apiUrl = "https://api.thedogapi.com/v1/images/search";
 
-let currentPage = 1; 
-let loading = false; 
+let currentPage = 1;
+let loading = false;
 let container;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -22,7 +22,7 @@ async function fetchDogs() {
     loading = true;
 
     try {
-        
+
 
         const response = await fetch(`${apiUrl}?limit=8&page=${currentPage}`, {
             method: "GET",
@@ -36,10 +36,10 @@ async function fetchDogs() {
         }
 
         const data = await response.json();
-        
+
 
         displayDogs(data);
-        currentPage++; 
+        currentPage++;
 
     } catch (error) {
         console.error("Error al obtener imágenes:", error);

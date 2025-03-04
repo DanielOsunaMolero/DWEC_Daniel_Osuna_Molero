@@ -5,7 +5,7 @@ let currentPage = 1;
 let loading = false;
 
 $(document).ready(function () {
-    fetchDogs(); 
+    fetchDogs();
 
     // Evento de Infinite Scroll
     $(window).on("scroll", function () {
@@ -19,16 +19,16 @@ function fetchDogs() {
     if (loading) return;
     loading = true;
 
-    
+
 
     $.ajax({
-        url: `${apiUrl}?limit=6&page=${currentPage}`, 
+        url: `${apiUrl}?limit=6&page=${currentPage}`,
         method: "GET",
         headers: {
             "x-api-key": apiKey
         },
         success: function (data) {
-        
+
             displayDogs(data);
             currentPage++;
         },
