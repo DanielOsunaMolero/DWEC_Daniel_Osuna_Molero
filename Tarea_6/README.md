@@ -1,6 +1,6 @@
 # PerroVerso
 
-**PerroVerso** es un sitio web futurista que muestra imágenes aleatorias de perros usando **The Dog API**, con un diseño moderno basado en **TailwindCSS** y **Parcel**.  
+**PerroVerso** muestra imágenes aleatorias de perros usando **The Dog API**, con un diseño moderno basado en **TailwindCSS** y **Parcel**.  
 
 ---
 
@@ -9,7 +9,20 @@
 - **JavaScript**
 - **Parcel**
 - **Scroll infinito**
+---
+## Flujo de trabajo usado
 
+- Instalación y configuración inicial: Se instala TailwindCSS y Parcel.
+
+- Desarrollo con Parcel
+
+- Gestión de estilos con TailwindCSS
+
+- Consumo de API con JavaScript: Se usa fetch para obtener imágenes de perros y mostrarlas.
+
+-Implementación de scroll infinito
+
+- Optimización y despliegue
 ---
 
 ## Instalación y configuración
