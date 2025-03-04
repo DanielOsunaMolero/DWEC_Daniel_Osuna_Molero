@@ -12,17 +12,17 @@
 ---
 ## Flujo de trabajo usado
 
-- Instalación y configuración inicial: Se instala TailwindCSS y Parcel.
+1. Instalación y configuración inicial: Se instala TailwindCSS y Parcel.
 
-- Desarrollo con Parcel
+2. Desarrollo con Parcel
 
-- Gestión de estilos con TailwindCSS
+3. Gestión de estilos con TailwindCSS
 
-- Consumo de API con JavaScript: Se usa fetch para obtener imágenes de perros y mostrarlas.
+4. Consumo de API con JavaScript: Se usa fetch para obtener imágenes de perros y mostrarlas.
 
--Implementación de scroll infinito
+5. Implementación de scroll infinito
 
-- Optimización y despliegue
+6. Optimización y despliegue
 ---
 
 ## Instalación y configuración
