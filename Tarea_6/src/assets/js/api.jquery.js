@@ -15,31 +15,37 @@ $(document).ready(function () {
     });
 });
 
-function fetchDogs() {
+async function fetchDogs() {
     if (loading) return;
     loading = true;
 
+    try {
+        console.log(`Cargando imágenes (Página ${currentPage})...`);
 
+        const response = await fetch(`${apiUrl}?limit=6&page=${currentPage}`, {
+            method: "GET",
+            headers: {
+                "x-api-key": apiKey
+            }
+        });
 
-    $.ajax({
-        url: `${apiUrl}?limit=6&page=${currentPage}`,
-        method: "GET",
-        headers: {
-            "x-api-key": apiKey
-        },
-        success: function (data) {
-
-            displayDogs(data);
-            currentPage++;
-        },
-        error: function (error) {
-            console.error("Error al obtener imágenes:", error);
-        },
-        complete: function () {
-            loading = false;
+        if (!response.ok) {
+            throw new Error(`HTTP Error! Status: ${response.status}`);
         }
-    });
+
+        const data = await response.json();
+        console.log("RespuestaAPI:", data);
+        
+        displayDogs(data);
+        currentPage++;
+
+    } catch (error) {
+        console.error("Error al obtener imágenes:", error);
+    } finally {
+        loading = false;
+    }
 }
+
 
 function displayDogs(dogs) {
     const container = $("#card-container");
