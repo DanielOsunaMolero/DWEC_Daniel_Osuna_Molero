@@ -7,7 +7,6 @@ let loading = false;
 $(document).ready(function () {
     fetchDogs();
 
-    // Evento de Infinite Scroll
     $(window).on("scroll", function () {
         if ($(window).scrollTop() + $(window).height() >= $(document).height() - 200) {
             fetchDogs();
