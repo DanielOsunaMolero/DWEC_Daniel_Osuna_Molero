@@ -5,8 +5,7 @@
       {
         "targets": {
           "browsers": [
-            "last 2 versions",
-            "ie >= 11",
+            "ie 11",
             "Firefox >= 45",
             "Chrome >= 49",
             "Safari >= 9"
@@ -14,12 +13,17 @@
         },
         "useBuiltIns": "entry",
         "corejs": 3,
-        "forceAllTransforms": true
+        "forceAllTransforms": true,
+        "debug": true
       }
     ]
   ],
   "plugins": [
     "@babel/plugin-transform-runtime",
-    "@babel/plugin-proposal-class-properties"
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-transform-arrow-functions",
+    "@babel/plugin-transform-block-scoping",
+    "@babel/plugin-transform-classes",
+    "@babel/plugin-transform-template-literals"
   ]
 }
