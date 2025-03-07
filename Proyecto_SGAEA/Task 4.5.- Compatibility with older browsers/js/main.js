@@ -42,20 +42,22 @@ function inicializarDatosPrueba() {
 
     asignaturas.push(matematicas, fisica, literatura);
 
-    estudiante1.matricular(matematicas);
-    estudiante1.matricular(fisica);
-    estudiante2.matricular(matematicas);
-    estudiante2.matricular(literatura);
-    estudiante3.matricular(fisica);
-    estudiante3.matricular(literatura);
+    estudiante1.matricular("Matemáticas", PlistaEstudiantes, asignaturas);
+    estudiante1.matricular("Física", PlistaEstudiantes, asignaturas);
+    estudiante2.matricular("Matemáticas", PlistaEstudiantes, asignaturas);
+    estudiante2.matricular("Literatura", PlistaEstudiantes, asignaturas);
+    estudiante3.matricular("Física", PlistaEstudiantes, asignaturas);
+    estudiante3.matricular("Literatura", PlistaEstudiantes, asignaturas);
+
 
     // Asignar notas a cada estudiante en sus asignaturas
-    matematicas.asignarNota(estudiante1, 8);
-    matematicas.asignarNota(estudiante2, 9);
-    fisica.asignarNota(estudiante1, 7);
-    fisica.asignarNota(estudiante3, 6);
-    literatura.asignarNota(estudiante2, 9);
-    literatura.asignarNota(estudiante3, 7);
+    matematicas.asignarNota("Daniel", 8, PlistaEstudiantes);
+    matematicas.asignarNota("Ana", 9, PlistaEstudiantes);
+    fisica.asignarNota("Daniel", 7, PlistaEstudiantes);
+    fisica.asignarNota("Carlos", 6, PlistaEstudiantes);
+    literatura.asignarNota("Ana", 9, PlistaEstudiantes);
+    literatura.asignarNota("Carlos", 7, PlistaEstudiantes);
+
 
     console.log("Datos inicializados correctamente.");
     console.log("-----------------------------------------------------------");

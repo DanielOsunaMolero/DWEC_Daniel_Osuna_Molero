@@ -1,10 +1,35 @@
-Para esta tarea he usado el codigo de la Tarea 4.3-jsDoc ya que estaba el codigo ya comentado
+# **Modularización del Código - Task 4.4 - Organizing Code**
 
-Para la modularizacion unicamente he copiado y pegado el codigo de las clases cada una en su correspondiente archivo
-junto a la exportacion e immportacion de estas segun sea necesario ya sea en otras clases o en el main
+## **Descripción**
+Para esta tarea, he reutilizado el código de la **Tarea 4.3-jsDoc**, ya que en ella el código ya estaba correctamente comentado utilizando **JSDoc**.
 
-Por ejemplo en la clase ListaEstudiantes es necesario importar la clase Estudiante
+El objetivo principal de esta tarea ha sido **modularizar** el código, separando cada clase en su propio archivo y asegurando una correcta importación y exportación entre los distintos módulos.
 
-Ejemplo de importacion : *import { Estudiante } from './Estudiante.js';*
+## **Proceso de Modularización**
+La modularización se ha realizado de la siguiente manera:
 
-Ejemplo de exportacion de una clase : *export class ListaEstudiantes*
+1. **Separación de Clases**
+   - Cada clase se ha colocado en su propio archivo **`.js`** correspondiente.
+   - Se ha asegurado que cada clase exporte correctamente su funcionalidad.
+
+2. **Importación y Exportación**
+   - Se ha utilizado la sintaxis de **ES Modules (`import` y `export`)** para organizar el código.
+   - Se han importado las clases necesarias en los archivos donde se requieren.
+
+### **Ejemplo de Importación**
+En la clase `ListaEstudiantes`, es necesario importar la clase `Estudiante` para su uso.
+
+```javascript
+import { Estudiante } from './Estudiante.js';
+```
+
+### **Ejemplo de Exportación de una Clase**
+Para exportar una clase desde su módulo y hacerla accesible en otros archivos, se usa:
+
+```javascript
+export class ListaEstudiantes {
+    // Implementación de la clase
+}
+```
+
+
