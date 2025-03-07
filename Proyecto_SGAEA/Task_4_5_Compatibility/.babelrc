@@ -5,6 +5,7 @@
       {
         "targets": {
           "browsers": [
+            "last 2 versions",
             "ie >= 11",
             "Firefox >= 45",
             "Chrome >= 49",
@@ -12,7 +13,8 @@
           ]
         },
         "useBuiltIns": "entry",
-        "corejs": 3
+        "corejs": 3,
+        "forceAllTransforms": true
       }
     ]
   ],
