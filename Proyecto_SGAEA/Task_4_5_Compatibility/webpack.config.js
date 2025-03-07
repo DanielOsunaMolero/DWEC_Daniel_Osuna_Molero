@@ -1,5 +1,4 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: ['@babel/polyfill', './js/main.js'],
@@ -18,12 +17,9 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './index.html', // Copia el index.html automáticamente
-      filename: 'index.html'
-    })
-  ],
+  resolve: {
+    fallback: { "fs": false }  // Asegurar compatibilidad con algunos módulos
+  },
   devServer: {
     static: './dist',
     open: true
