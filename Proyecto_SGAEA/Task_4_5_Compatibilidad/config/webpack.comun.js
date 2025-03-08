@@ -1,20 +1,18 @@
-import CopyWebpackPlugin from 'copy-webpack-plugin';
-import path from 'path';
+const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-
-export default {
+module.exports = {
   entry: './js/main.js',
   output: {
-    path: path.resolve(process.cwd(), 'compilado', process.env.modo),// Se define la carpeta de salida.
+    path: path.resolve(__dirname, 'compilado'),
     filename: 'bundle.js',
   },
-  mode: process.env.modo,
-
-  plugins: [// Se añade el plugin de copia de archivos.
+  mode: process.env.NODE_ENV || 'development',
+  plugins: [
     new CopyWebpackPlugin({
-        patterns: [
-            { from: './index.html', to: '.' }, 
-        ],
+      patterns: [
+        { from: './index.html', to: '.' },
+      ],
     }),
-],
-}
+  ],
+};

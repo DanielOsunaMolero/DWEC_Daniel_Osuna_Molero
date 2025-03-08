@@ -11,6 +11,7 @@
     "copy-webpack-plugin": "^12.0.2",
     "core-js": "^3.41.0",
     "cross-env": "^7.0.3",
+    "cross-env-shell": "^7.0.3",
     "html-webpack-plugin": "^5.6.3",
     "jsdoc": "^4.0.4",
     "minami": "^1.2.3",
@@ -27,11 +28,12 @@
     "all": "npm-run-all clean doc",
     "antiguo": "cross-env-shell webpack --config config/webpack.antiguo.js --mode $modo",
     "moderno": "cross-env-shell webpack --config config/webpack.moderno.js --mode $modo",
-    "des": "cross-env-shell modo=development run-s antiguo moderno",
-    "prod": "cross-env-shell modo=production run-s antiguo moderno",
+    "des": "cross-env modo=development npm-run-all antiguo moderno",
+    "prod": "cross-env-shell modo=production npm-run-all antiguo moderno",
     "clean:comp": "rimraf compilado",
-    "start": "run-s clean:comp des prod"
-  },
+    "start": "npm-run-all clean:comp des prod"
+}
+,
   "keywords": [],
   "author": "Daniel Osuna Molero",
   "license": "ISC",

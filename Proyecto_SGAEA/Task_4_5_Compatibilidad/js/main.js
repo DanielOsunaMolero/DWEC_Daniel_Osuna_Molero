@@ -1,6 +1,7 @@
-import "core-js/stable/index.js";
-import "regenerator-runtime/runtime.js";
-import "whatwg-fetch/dist/fetch.umd.js";
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+import "whatwg-fetch";
+
 
 
 /**

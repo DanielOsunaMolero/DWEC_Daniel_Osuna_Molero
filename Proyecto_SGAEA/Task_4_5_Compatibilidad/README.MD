@@ -196,10 +196,10 @@ https://danielosuna14.netlify.app/proyecto_sgaea/task_4_5_compatibilidad/
 
 Para verificar que el código transpila y se ejecuta correctamente en distintos navegadores, se realizaron pruebas en BrowserStack en diferentes versiones:
 
-## 📌 Prueba en Microsoft Edge 85 (Windows 8.1)
-![Prueba en Edge 85](imagenes/img1.png)
+## 📌 Prueba en Firefox 43
+![Prueba en Edge 85](imagenes/Firefox43.png)
 
-## 📌 Prueba en Firefox 99 (macOS Catalina)
-![Prueba en Firefox 99](imagenes/img2.png)
+## 📌 Prueba en Opera 28
+![Prueba en Firefox 99](imagenes/Opera28.png)
 
 

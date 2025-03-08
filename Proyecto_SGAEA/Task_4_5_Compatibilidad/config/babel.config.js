@@ -1,12 +1,12 @@
-export default {
+module.exports = {
   presets: [
-      [
-          '@babel/preset-env',
-          {
-              targets: "> 0.25%, not dead, ie 11",  
-              useBuiltIns: "entry", 
-              corejs: 3,  
-          },
-      ],
-  ],
+    [
+      "@babel/preset-env",
+      {
+        targets: "> 0.25%, not dead, ie 11",
+        useBuiltIns: "entry",
+        corejs: 3
+      }
+    ]
+  ]
 };

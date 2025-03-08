@@ -1,9 +1,8 @@
+const path = require('path');
+const { merge } = require('webpack-merge'); 
+const common = require('./webpack.comun.js'); 
 
-import path from 'path';
-import { merge } from 'webpack-merge'; 
-import common from './webpack.comun.js'; 
-
-export default merge(common, {// Se mezcla la configuración común con la configuración específica.
+module.exports = merge(common, {
     output: {
         filename: 'bundle.antiguo.js', 
     },
@@ -11,12 +10,12 @@ export default merge(common, {// Se mezcla la configuración común con la confi
         rules:  [
             {
                 test: /\.js$/, 
-                exclude: /node_modules/, // Excluir la carpeta node_modules.
+                exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader', 
                     options: {
-                        presets: ['@babel/preset-env'],
-                      },
+                        presets: [['@babel/preset-env', { targets: "> 0.25%, not dead, ie 11", useBuiltIns: "entry", corejs: 3 }]],
+                    },
                 }
             },
         ],
