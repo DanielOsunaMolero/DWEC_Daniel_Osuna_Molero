@@ -1,3 +1,8 @@
+import "core-js/stable/index.js";
+import "regenerator-runtime/runtime.js";
+import "whatwg-fetch/dist/fetch.umd.js";
+
+
 /**
  * 2. Definición de Clases
  * 
