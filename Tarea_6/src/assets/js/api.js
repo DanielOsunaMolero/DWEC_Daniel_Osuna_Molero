@@ -3,18 +3,15 @@ const apiUrl = "https://api.thedogapi.com/v1/images/search";
 
 let currentPage = 1;
 let loading = false;  // Estado para evitar múltiples llamadas
-let container;
 
-document.addEventListener("DOMContentLoaded", () => {
-    container = document.getElementById("card-container");
+const container = document.getElementById("card-container");
 
-    if (!container) {
-        console.error("Error: No se encontró el contenedor 'card-container'.");
-        return;
-    }
+if (!container) {
+    console.error("Error: No se encontró el contenedor 'card-container'.");
+} else {
+    fetchDogs();
+}
 
-    fetchDogs(); 
-});
 
 async function fetchDogs() {
     if (loading) return;

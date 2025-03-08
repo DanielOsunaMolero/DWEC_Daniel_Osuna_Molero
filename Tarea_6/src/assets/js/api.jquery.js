@@ -4,14 +4,19 @@ const apiUrl = "https://api.thedogapi.com/v1/images/search";
 let currentPage = 1;
 let loading = false;
 
-$(document).ready(function () {
-    fetchDogs();
+const container = $("#card-container");
 
-    $(window).on("scroll", function () {
-        if ($(window).scrollTop() + $(window).height() >= $(document).height() - 200) {
-            fetchDogs();
-        }
-    });
+if (container.length) {
+    fetchDogs();
+} else {
+    console.error("Error: No se encontró el contenedor 'card-container'.");
+}
+
+// Cargar más imágenes al hacer scroll
+$(window).on("scroll", function () {
+    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 200) {
+        fetchDogs();
+    }
 });
 
 async function fetchDogs() {
@@ -21,28 +26,25 @@ async function fetchDogs() {
     try {
         console.log(`🔄 Cargando imágenes (Página ${currentPage})...`);
 
-        let allDogs = [];
-
-        // Hace 4 peticiones seguidas para obtener 40 imágenes (10 imágenes por petición)
-        for (let i = 0; i < 4; i++) {
-            const response = await fetch(`${apiUrl}?limit=10&page=${currentPage}`, {
+        
+        const fetchRequests = Array.from({ length: 4 }, (_, i) => 
+            fetch(`${apiUrl}?limit=10&page=${currentPage + i}`, {
                 method: "GET",
                 headers: {
                     "x-api-key": apiKey
                 }
-            });
+            }).then(response => {
+                if (!response.ok) throw new Error(`HTTP Error! Status: ${response.status}`);
+                return response.json();
+            })
+        );
 
-            if (!response.ok) {
-                throw new Error(`HTTP Error! Status: ${response.status}`);
-            }
+        const results = await Promise.all(fetchRequests);
+        const allDogs = results.flat(); 
 
-            const data = await response.json();
-            allDogs = allDogs.concat(data);
-        }
-
-        console.log("✅ Imágenes obtenidas:", allDogs.length);
+        console.log(`✅ Imágenes obtenidas: ${allDogs.length}`);
         displayDogs(allDogs);
-        currentPage++;
+        currentPage += 4; // Avanzar 4 páginas
 
     } catch (error) {
         console.error("❌ Error al obtener imágenes:", error);
@@ -51,15 +53,8 @@ async function fetchDogs() {
     }
 }
 
-
-
 function displayDogs(dogs) {
-    const container = $("#card-container");
-
-    if (!container.length) {
-        console.error("Error: No se encontró el contenedor 'card-container' en el HTML.");
-        return;
-    }
+    if (!container.length) return;
 
     dogs.forEach(dog => {
         const card = $(`
