@@ -19,31 +19,38 @@ async function fetchDogs() {
     loading = true;
 
     try {
-        console.log(`Cargando imágenes (Página ${currentPage})...`);
+        console.log(`🔄 Cargando imágenes (Página ${currentPage})...`);
 
-        const response = await fetch(`${apiUrl}?limit=40&page=${currentPage}`, {  // ⬅ Cambié limit a 40
-            method: "GET",
-            headers: {
-                "x-api-key": apiKey
+        let allDogs = [];
+
+        // Hace 4 peticiones seguidas para obtener 40 imágenes (10 imágenes por petición)
+        for (let i = 0; i < 4; i++) {
+            const response = await fetch(`${apiUrl}?limit=10&page=${currentPage}`, {
+                method: "GET",
+                headers: {
+                    "x-api-key": apiKey
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP Error! Status: ${response.status}`);
             }
-        });
 
-        if (!response.ok) {
-            throw new Error(`HTTP Error! Status: ${response.status}`);
+            const data = await response.json();
+            allDogs = allDogs.concat(data);
         }
 
-        const data = await response.json();
-        console.log("Respuesta API:", data);
-        
-        displayDogs(data);
+        console.log("✅ Imágenes obtenidas:", allDogs.length);
+        displayDogs(allDogs);
         currentPage++;
 
     } catch (error) {
-        console.error("Error al obtener imágenes:", error);
+        console.error("❌ Error al obtener imágenes:", error);
     } finally {
         loading = false;
     }
 }
+
 
 
 function displayDogs(dogs) {

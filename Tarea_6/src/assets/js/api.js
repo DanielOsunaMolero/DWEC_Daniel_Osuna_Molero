@@ -13,37 +13,46 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    fetchDogs(); // Cargar los primeros perros
+    fetchDogs(); 
 });
 
 async function fetchDogs() {
-    if (loading) return;  // Evitar llamadas simultáneas
+    if (loading) return;
     loading = true;
 
     try {
         console.log(`🔄 Cargando imágenes (Página ${currentPage})...`);
 
-        const response = await fetch(`${apiUrl}?limit=14&page=${currentPage}`, {
-            method: "GET",
-            headers: {
-                "x-api-key": apiKey
-            }
-        });
+        let allDogs = [];
 
-        if (!response.ok) {
-            throw new Error(`HTTP Error! Status: ${response.status}`);
+        // Realizar 4 peticiones para obtener 40 imágenes (tiene maximo de 10)
+        for (let i = 0; i < 4; i++) {
+            const response = await fetch(`${apiUrl}?limit=10&page=${currentPage}`, {
+                method: "GET",
+                headers: {
+                    "x-api-key": apiKey
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP Error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            allDogs = allDogs.concat(data);
         }
 
-        const data = await response.json();
-        displayDogs(data);
+        console.log("✅ Imágenes obtenidas:", allDogs.length);
+        displayDogs(allDogs);
         currentPage++;
 
     } catch (error) {
-        console.error("Error al obtener imágenes:", error);
+        console.error("❌ Error al obtener imágenes:", error);
     } finally {
-        loading = false; // Se libera el estado de carga
+        loading = false;
     }
 }
+
 
 function displayDogs(dogs) {
     if (!container) return;
