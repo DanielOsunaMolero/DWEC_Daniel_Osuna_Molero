@@ -20,7 +20,7 @@ Para realizar el **polyfilling** y la **transpilación**, instala los siguientes
 npm install --save-dev webpack webpack-cli webpack-merge @babel/core @babel/preset-env babel-loader core-js regenerator-runtime copy-webpack-plugin cross-env html-webpack-plugin
 ```
 
-### Explicación de los paquetes:
+### Listado de los paquetes:
 
 - `webpack` 
 - `webpack-cli`
@@ -103,7 +103,7 @@ module.exports = {
 ---
 
 ## Configuración de Babel
-Se requiere un archivo **`babel.config.js`** para definir las directrices de transpilación:
+Se necesita un archivo **`babel.config.js`** para definir las directrices de transpilación:
 
 ```js
 module.exports = {
@@ -174,6 +174,22 @@ compilado/
 ├── production/   # Bundles optimizados para producción
 └── development/   # Bundles optimizados para desarrollo
 ```
+## Netlify
+
+Después de generar los bundles de Webpack, podemos desplegar el proyecto en Netlify para probarlo en diferentes navegadores, incluyendo versiones antiguas.
+
+## Pasos
+1. Vamos a netlify
+2. Inicia sesión con GitHub
+3. Add new site --> Import from git
+4. Donde pone publish directory colocamos 
+``````sh
+compilado/production
+``````
+5. Una vez completado podremos visitar 
+``````sh
+https://danielosuna14.netlify.app/proyecto_sgaea/task_4_5_compatibilidad/
+``````
 
 
 ## Pruebas en navegadores
