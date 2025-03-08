@@ -1,35 +1,190 @@
-# **Modularización del Código - Task 4.4 - Organizing Code**
+# Polyfilling y Transpilación SGAEA
 
-## **Descripción**
-Para esta tarea, he reutilizado el código de la **Tarea 4.3-jsDoc**, ya que en ella el código ya estaba correctamente comentado utilizando **JSDoc**.
+Este documento describe el proceso de implementación, configuración y comprobación del funcionamiento de **Node.js**, **Webpack** y **Babel** para realizar **polyfilling** y **transpilación** en el proyecto **SGAEA** (Sistema de Gestión Académica de Estudiantes y Asignaturas). El objetivo es asegurar que el proyecto pueda ejecutarse correctamente tanto en navegadores antiguos como en modernos.
 
-El objetivo principal de esta tarea ha sido **modularizar** el código, separando cada clase en su propio archivo y asegurando una correcta importación y exportación entre los distintos módulos.
+---
 
-## **Proceso de Modularización**
-La modularización se ha realizado de la siguiente manera:
+## Descargar Node.js y comenzar un proyecto nuevo
+Para iniciar un nuevo proyecto, abre la terminal en la carpeta del proyecto y ejecuta el siguiente comando:
 
-1. **Separación de Clases**
-   - Cada clase se ha colocado en su propio archivo **`.js`** correspondiente.
-   - Se ha asegurado que cada clase exporte correctamente su funcionalidad.
-
-2. **Importación y Exportación**
-   - Se ha utilizado la sintaxis de **ES Modules (`import` y `export`)** para organizar el código.
-   - Se han importado las clases necesarias en los archivos donde se requieren.
-
-### **Ejemplo de Importación**
-En la clase `ListaEstudiantes`, es necesario importar la clase `Estudiante` para su uso.
-
-```javascript
-import { Estudiante } from './Estudiante.js';
+```sh
+npm init -y
 ```
 
-### **Ejemplo de Exportación de una Clase**
-Para exportar una clase desde su módulo y hacerla accesible en otros archivos, se usa:
+---
 
-```javascript
-export class ListaEstudiantes {
-    // Implementación de la clase
+## Instalar los paquetes necesarios
+Para realizar el **polyfilling** y la **transpilación**, instala los siguientes paquetes:
+
+```sh
+npm install --save-dev webpack webpack-cli webpack-merge @babel/core @babel/preset-env babel-loader core-js regenerator-runtime copy-webpack-plugin cross-env html-webpack-plugin
+```
+
+### Explicación de los paquetes:
+
+- `webpack` 
+- `webpack-cli`
+- `webpack-merge`
+- `@babel/core` y `@babel/preset-env`
+- `babel-loader` 
+- `core-js` 
+- `regenerator-runtime` 
+- `copy-webpack-plugin`
+- `cross-env` 
+- `html-webpack-plugin` 
+
+---
+
+## Configuración de Webpack
+Se deben configurar tres archivos:
+
+### **`webpack.antiguo.js`**
+Este archivo genera un bundle compatible con navegadores antiguos:
+
+```js
+const path = require('path');
+const { merge } = require('webpack-merge');
+const common = require('./webpack.comun.js');
+
+module.exports = merge(common, {
+    output: {
+        filename: 'bundle.antiguo.js',
+    },
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                },
+            },
+        ],
+    },
+});
+```
+
+### **`webpack.moderno.js`**
+Este archivo genera un bundle compatible con navegadores modernos:
+
+```js
+const path = require('path');
+const { merge } = require('webpack-merge');
+const common = require('./webpack.comun.js');
+
+module.exports = merge(common, {
+    output: {
+        filename: 'bundle.moderno.js',
+    },
+});
+```
+
+### **`webpack.comun.js`**
+Este archivo establece la configuración compartida:
+
+```js
+const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
+module.exports = {
+    entry: './js/main.js',
+    output: {
+        path: path.resolve(process.cwd(), 'compilado', process.env.modo),
+    },
+    mode: process.env.modo,
+    plugins: [
+        new CopyWebpackPlugin({
+            patterns: [{ from: './index.html', to: '.' }],
+        }),
+    ],
+};
+```
+
+---
+
+## Configuración de Babel
+Se requiere un archivo **`babel.config.js`** para definir las directrices de transpilación:
+
+```js
+module.exports = {
+    presets: [
+        [
+            '@babel/preset-env',
+            {
+                targets: '> 0.25%, not dead',
+                useBuiltIns: 'usage',
+                corejs: 3,
+            },
+        ],
+    ],
+};
+```
+
+---
+
+## Configuración del HTML
+Para incluir ambos bundles en el proyecto, usa el siguiente código en el **`index.html`**:
+
+```html
+<head>
+    <script defer type="module" src="bundle.moderno.js"></script>
+    <script defer src="bundle.antiguo.js"></script>
+</head>
+```
+
+Esto permite que cada navegador seleccione y ejecute el bundle que mejor se adapte a sus capacidades.
+
+---
+
+## Creación de scripts en `package.json`
+Para facilitar la ejecución, añade estos scripts en `package.json`:
+
+```json
+"scripts": {
+    "antiguo": "cross-env-shell webpack --config webpack.antiguo.js --mode $modo",
+    "moderno": "cross-env-shell webpack --config webpack.moderno.js --mode $modo",
+    "des": "cross-env-shell modo=development run-s antiguo moderno",
+    "prod": "cross-env-shell modo=production run-s antiguo moderno",
+    "clean:comp": "rimraf compilado",
+    "start": "run-s clean:comp des prod"
 }
 ```
 
+### Descripción de los scripts:
+- **`antiguo`** → Crea el bundle para navegadores antiguos.
+- **`moderno`** → Crea el bundle para navegadores modernos.
+- **`des`** → Genera ambos bundles en modo desarrollo.
+- **`prod`** → Genera ambos bundles en modo producción.
+- **`clean:comp`** → Elimina la carpeta `compilado`.
+- **`start`** → Borra `compilado` y genera nuevos bundles.
+
+---
+
+## Generación de los bundles y comprobación
+Para generar los bundles, ejecuta:
+
+```sh
+npm run start
+```
+
+Esto creará la siguiente estructura:
+
+```
+compilado/
+├── production/   # Bundles optimizados para producción
+└── development/   # Bundles optimizados para desarrollo
+```
+
+
+## Pruebas en navegadores
+
+Para verificar que el código transpila y se ejecuta correctamente en distintos navegadores, se realizaron pruebas en BrowserStack en diferentes versiones:
+
+## Prueba en Microsoft Edge 85 (Windows 8.1)
+
+!(Proyecto_SGAEA\Task_4_5_Compatibilidad\IMG\image (1).png)
+
+## Prueba en Firefox 99 (macOS Catalina)
+
+!(Proyecto_SGAEA\Task_4_5_Compatibilidad\IMG\image 2.png)
 
