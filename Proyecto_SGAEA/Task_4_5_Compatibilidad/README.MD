@@ -182,9 +182,9 @@ Para verificar que el código transpila y se ejecuta correctamente en distintos 
 
 ## Prueba en Microsoft Edge 85 (Windows 8.1)
 
-!(Proyecto_SGAEA\Task_4_5_Compatibilidad\IMG\image (1).png)
+![imagen](\IMG\image (1).png)
 
 ## Prueba en Firefox 99 (macOS Catalina)
 
-!(Proyecto_SGAEA\Task_4_5_Compatibilidad\IMG\image 2.png)
+![imagen2](\IMG\image 2.png)
 
