@@ -182,9 +182,9 @@ Para verificar que el código transpila y se ejecuta correctamente en distintos 
 
 ## Prueba en Microsoft Edge 85 (Windows 8.1)
 
-![imagen](\IMG\img1.png)
+![imagen](img\img1.png)
 
 ## Prueba en Firefox 99 (macOS Catalina)
 
-![imagen2](\IMG\img2.png)
+![imagen2](img\img2.png)
 
