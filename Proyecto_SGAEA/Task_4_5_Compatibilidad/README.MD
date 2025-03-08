@@ -181,9 +181,9 @@ compilado/
 Para verificar que el código transpila y se ejecuta correctamente en distintos navegadores, se realizaron pruebas en BrowserStack en diferentes versiones:
 
 ## 📌 Prueba en Microsoft Edge 85 (Windows 8.1)
-![Prueba en Edge 85](img/img1.png)
+![Prueba en Edge 85](imagenes/img1.png)
 
 ## 📌 Prueba en Firefox 99 (macOS Catalina)
-![Prueba en Firefox 99](img/img2.png)
+![Prueba en Firefox 99](imagenes/img2.png)
 
 
