@@ -24,7 +24,7 @@ async function fetchDogs() {
     loading = true;
 
     try {
-        console.log(`🔄 Cargando imágenes (Página ${currentPage})...`);
+        console.log(`Cargando imágenes (Página ${currentPage})...`);
 
         
         const fetchRequests = Array.from({ length: 4 }, (_, i) => 
@@ -42,12 +42,12 @@ async function fetchDogs() {
         const results = await Promise.all(fetchRequests);
         const allDogs = results.flat(); 
 
-        console.log(`✅ Imágenes obtenidas: ${allDogs.length}`);
+        console.log(`Imágenes obtenidas: ${allDogs.length}`);
         displayDogs(allDogs);
         currentPage += 4; // Avanzar 4 páginas
 
     } catch (error) {
-        console.error("❌ Error al obtener imágenes:", error);
+        console.error(" Error al obtener imágenes:", error);
     } finally {
         loading = false;
     }

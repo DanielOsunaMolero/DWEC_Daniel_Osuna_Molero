@@ -18,7 +18,7 @@ async function fetchDogs() {
     loading = true;
 
     try {
-        console.log(`🔄 Cargando imágenes (Página ${currentPage})...`);
+        console.log(`Cargando imágenes (Página ${currentPage})...`);
 
         let allDogs = [];
 
@@ -39,12 +39,12 @@ async function fetchDogs() {
             allDogs = allDogs.concat(data);
         }
 
-        console.log("✅ Imágenes obtenidas:", allDogs.length);
+        console.log("Imágenes obtenidas:", allDogs.length);
         displayDogs(allDogs);
         currentPage++;
 
     } catch (error) {
-        console.error("❌ Error al obtener imágenes:", error);
+        console.error("Error al obtener imágenes:", error);
     } finally {
         loading = false;
     }
