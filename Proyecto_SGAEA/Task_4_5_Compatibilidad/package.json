@@ -1,0 +1,38 @@
+{
+  "type": "module",
+  "name": "main",
+  "version": "1.0.0",
+  "main": "js/main.js",
+  "devDependencies": {
+    "@babel/core": "^7.26.7",
+    "@babel/preset-env": "^7.26.7",
+    "babel-loader": "^9.2.1",
+    "clean-jsdoc-theme": "^4.3.0",
+    "copy-webpack-plugin": "^12.0.2",
+    "core-js": "^3.40.0",
+    "cross-env": "^7.0.3",
+    "html-webpack-plugin": "^5.6.3",
+    "jsdoc": "^4.0.4",
+    "minami": "^1.2.3",
+    "npm-run-all": "^4.1.5",
+    "regenerator-runtime": "^0.14.1",
+    "rimraf": "^6.0.1",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-merge": "^6.0.1"
+  },
+  "scripts": {
+    "doc": "npx jsdoc -c jsdoc.json",
+    "clean": "rimraf documentacion",
+    "all": "npm-run-all clean doc",
+    "antiguo": "cross-env-shell webpack --config webpack.antiguo.js --mode $modo",
+    "moderno": "cross-env-shell webpack --config webpack.moderno.js --mode $modo",
+    "des": "cross-env-shell modo=development run-s antiguo moderno",
+    "prod": "cross-env-shell modo=production run-s antiguo moderno",
+    "clean:comp": "rimraf compilado",
+    "start": "run-s clean:comp des prod"
+  },
+  "keywords": [],
+  "author": "Daniel Osuna Molero",
+  "license": "ISC"
+}

@@ -4,8 +4,6 @@
  * En esta parte se importan las clases Direccion, Estudiante, Asignatura, ListaEstudiantes.
  * Todas las clases están en sus respecitivos archivos.
  */
-import "core-js/stable";
-import "regenerator-runtime/runtime";
 
 import { Direccion } from './Direccion.js';
 import { Asignatura } from './Asignatura.js';

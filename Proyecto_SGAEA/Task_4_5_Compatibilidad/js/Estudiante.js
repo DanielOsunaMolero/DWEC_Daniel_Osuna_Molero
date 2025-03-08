@@ -8,7 +8,7 @@ import { Asignatura } from './Asignatura.js';
  */
 export class Estudiante extends Persona {
 
-
+    #asignaturas;
 
     /**
      * Crea una instancia de Estudiante.
@@ -19,7 +19,7 @@ export class Estudiante extends Persona {
      */
     constructor(id, nombre, edad, direccion) {
         super(id, nombre, edad, direccion);
-        this._asignaturas = [];
+        this.#asignaturas = [];
     }
 
     /**
@@ -27,7 +27,7 @@ export class Estudiante extends Persona {
      * @returns {Array} Lista de asignaturas.
      */
     get asignaturas() {
-        return [...this._asignaturas];
+        return [...this.#asignaturas];
     }
 
     /**
@@ -41,8 +41,8 @@ export class Estudiante extends Persona {
         try {
             const asignatura = listaEstudiantes.buscarAsignaturaPorNombre(nombreAsignatura, asignaturasDisponibles);
 
-            if (!this._asignaturas.some(a => a.asignatura === asignatura)) {
-                this._asignaturas.push({ asignatura, fechaMatricula: new Date().toLocaleDateString("es-ES") });
+            if (!this.#asignaturas.some(a => a.asignatura === asignatura)) {
+                this.#asignaturas.push({ asignatura, fechaMatricula: new Date().toLocaleDateString("es-ES") });
                 asignatura.agregarEstudiante(this);
                 console.log(`Estudiante ${this.nombre} matriculado en ${asignatura.nombre}.`);
             } else {
@@ -64,10 +64,10 @@ export class Estudiante extends Persona {
         try {
             const asignatura = listaEstudiantes.buscarAsignaturaPorNombre(nombreAsignatura, asignaturasDisponibles);
 
-            const index = this._asignaturas.findIndex(a => a.asignatura === asignatura);
+            const index = this.#asignaturas.findIndex(a => a.asignatura === asignatura);
 
             if (index !== -1) {
-                this._asignaturas.splice(index, 1);
+                this.#asignaturas.splice(index, 1);
                 asignatura.eliminarEstudiante(this);
                 console.log(`Estudiante ${this.nombre} desmatriculado de ${asignatura.nombre}.`);
             } else {
@@ -79,18 +79,18 @@ export class Estudiante extends Persona {
     }
 
     /**
- * Calcula el promedio de todas las asignaturas en las que el estudiante está matriculado.
- * @returns {string} Promedio de las calificaciones.
- * @throws {Error} Si el estudiante no tiene asignaturas matriculadas o no hay calificaciones.
- */
+     * Calcula el promedio de todas las asignaturas en las que el estudiante está matriculado.
+     * @returns {string} Promedio de las calificaciones.
+     * @throws {Error} Si el estudiante no tiene asignaturas matriculadas o no hay calificaciones.
+     */
     promedioIndividual() {
         try {
-            if (this._asignaturas.length === 0) throw new Error("El estudiante no tiene asignaturas matriculadas.");
-            const notas = this._asignaturas.flatMap(a => a.asignatura.obtenerNotas(this));
+            if (this.#asignaturas.length === 0) throw new Error("El estudiante no tiene asignaturas matriculadas.");
+            const notas = this.#asignaturas.flatMap(a => a.asignatura.obtenerNotas(this));
             if (notas.length === 0) throw new Error("No hay calificaciones disponibles.");
 
             const promedio = (notas.reduce((sum, val) => sum + val, 0) / notas.length).toFixed(2);
-
+            
             return promedio;
         } catch (error) {
             console.error("Error al calcular promedio:", error.message);
@@ -102,7 +102,7 @@ export class Estudiante extends Persona {
      */
     mostrarAsignaturas() {
         console.log(`Asignaturas de ${this.nombre}:`);
-        this._asignaturas.forEach(a => console.log(`- ${a.asignatura.nombre}`));
+        this.#asignaturas.forEach(a => console.log(`- ${a.asignatura.nombre}`));
     }
 
     /**
@@ -110,6 +110,6 @@ export class Estudiante extends Persona {
      * @returns {string} Representación en cadena del estudiante.
      */
     toString() {
-        return `${super.toString()}, ${this._asignaturas.length > 0 ? `Asignaturas matriculadas: ${this._asignaturas.length}` : "No tiene asignaturas matriculadas."}`;
+        return `${super.toString()}, ${this.#asignaturas.length > 0 ? `Asignaturas matriculadas: ${this.#asignaturas.length}` : "No tiene asignaturas matriculadas."}`;
     }
 }
