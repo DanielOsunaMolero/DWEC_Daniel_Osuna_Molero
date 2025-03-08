@@ -1,22 +1,22 @@
-const path = require('path');
-const { merge } = require('webpack-merge'); 
-const common = require('./webpack.comun.js'); 
+import path from 'path';
+import { merge } from 'webpack-merge';
+import common from './webpack.comun.js'; // ✅ Importar correctamente el archivo de configuración común
 
-module.exports = merge(common, {
+export default merge(common, {
     output: {
-        filename: 'bundle.antiguo.js', 
+        filename: 'bundle.antiguo.js',
     },
-    module: { 
-        rules:  [
+    module: {
+        rules: [
             {
-                test: /\.js$/, 
+                test: /\.js$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: 'babel-loader', 
+                    loader: 'babel-loader',
                     options: {
-                        presets: [['@babel/preset-env', { targets: "> 0.25%, not dead, ie 11", useBuiltIns: "entry", corejs: 3 }]],
+                        presets: ['@babel/preset-env'],
                     },
-                }
+                },
             },
         ],
     },

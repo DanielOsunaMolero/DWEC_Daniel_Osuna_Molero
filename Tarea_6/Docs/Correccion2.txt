@@ -1,0 +1,2 @@
+Arreglo de api.jquery.js para que se use bien jquery
+Elimindos divs restantes

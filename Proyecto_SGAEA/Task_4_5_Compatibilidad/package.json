@@ -22,17 +22,18 @@
     "webpack-cli": "^6.0.1",
     "webpack-merge": "^6.0.1"
   },
-  "scripts": {
+"scripts": {
     "doc": "npx jsdoc -c jsdoc.json",
     "clean": "rimraf documentacion",
     "all": "npm-run-all clean doc",
-    "antiguo": "cross-env-shell webpack --config config/webpack.antiguo.js --mode $modo",
-    "moderno": "cross-env-shell webpack --config config/webpack.moderno.js --mode $modo",
-    "des": "cross-env modo=development npm-run-all antiguo moderno",
-    "prod": "cross-env-shell modo=production npm-run-all antiguo moderno",
+    "antiguo": "set modo=development && webpack --config config/webpack.antiguo.js --mode=%modo%",
+    "moderno": "set modo=development && webpack --config config/webpack.moderno.js --mode=%modo%",
+    "des": "set modo=development && npm-run-all antiguo moderno",
+    "prod": "set modo=production && npm-run-all antiguo moderno",
     "clean:comp": "rimraf compilado",
     "start": "npm-run-all clean:comp des prod"
 }
+
 ,
   "keywords": [],
   "author": "Daniel Osuna Molero",

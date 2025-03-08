@@ -1,62 +1,68 @@
-const apiKey = "";  // Coloca aquí tu clave API
+const apiKey = "";
 const apiUrl = "https://api.thedogapi.com/v1/images/search";
 
 let currentPage = 1;
 let loading = false;
 
-const container = $("#card-container");
+$(document).ready(function () {
+    const container = $("#card-container");
 
-if (container.length) {
-    fetchDogs();
-} else {
-    console.error("Error: No se encontró el contenedor 'card-container'.");
-}
-
-// Cargar más imágenes al hacer scroll
-$(window).on("scroll", function () {
-    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 200) {
-        fetchDogs();
+    if (container.length === 0) {
+        console.error("❌ Error: No se encontró el contenedor 'card-container'.");
+        return;
     }
+
+    fetchDogs();
+
+    
+    $(window).on("scroll", function () {
+        if ($(window).scrollTop() + $(window).height() >= $(document).height() - 200) {
+            fetchDogs();
+        }
+    });
 });
 
-async function fetchDogs() {
+function fetchDogs() {
     if (loading) return;
     loading = true;
 
-    try {
-        console.log(`Cargando imágenes (Página ${currentPage})...`);
+    console.log(`🔄 Cargando imágenes (Página ${currentPage})...`);
 
+    
+    const fetchRequests = Array.from({ length: 4 }, (_, i) =>
+        $.ajax({
+            url: `${apiUrl}?limit=10&page=${currentPage + i}`,
+            method: "GET",
+            headers: {
+                "x-api-key": apiKey
+            }
+        })
+    );
+
+    $.when(...fetchRequests).done(function (...responses) {
         
-        const fetchRequests = Array.from({ length: 4 }, (_, i) => 
-            fetch(`${apiUrl}?limit=10&page=${currentPage + i}`, {
-                method: "GET",
-                headers: {
-                    "x-api-key": apiKey
-                }
-            }).then(response => {
-                if (!response.ok) throw new Error(`HTTP Error! Status: ${response.status}`);
-                return response.json();
-            })
-        );
+        const allDogs = responses.flatMap(response => response[0]); 
 
-        const results = await Promise.all(fetchRequests);
-        const allDogs = results.flat(); 
-
-        console.log(`Imágenes obtenidas: ${allDogs.length}`);
+        console.log(`🐶 Imágenes obtenidas: ${allDogs.length}`, allDogs);
         displayDogs(allDogs);
-        currentPage += 4; // Avanzar 4 páginas
-
-    } catch (error) {
-        console.error(" Error al obtener imágenes:", error);
-    } finally {
+        currentPage += 4; 
+    }).fail(function (error) {
+        console.error("❌ Error al obtener imágenes:", error);
+    }).always(function () {
         loading = false;
-    }
+    });
 }
 
 function displayDogs(dogs) {
+    const container = $("#card-container");
     if (!container.length) return;
 
     dogs.forEach(dog => {
+        if (!dog || !dog.url || !dog.id || !dog.width || !dog.height) {
+            console.warn("❌ Se encontró un perro con datos incompletos:", dog);
+            return; 
+        }
+
         const card = $(`
             <article class="relative bg-gradient-to-r from-blue-900 via-purple-800 to-indigo-900 
                           text-white p-4 shadow-lg rounded-xl border border-cyan-400 
