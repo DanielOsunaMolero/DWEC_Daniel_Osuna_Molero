@@ -1,0 +1,6 @@
+Eliminado archivo tailwindcss vacio
+Ahora es adaptable a todas las resoluciones
+Eliminados los divs por section y article
+Desplazamiento infinito arreglado en JavaScript con un pequeño retardo de 2 segundos por la API, 
+en pantallas muy grandes hay conflicto ya que no detecta el scroll y solo tiene peticiones de 10 en 10 esta API
+Arreglado el error de .postcss.config.js
